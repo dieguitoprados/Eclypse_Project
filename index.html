@@ -7,6 +7,7 @@
   <meta name="description" content="Gafas de eclipse solar certificadas ISO 12312-2 y marcado CE para el eclipse total del 12 de agosto de 2026 en España. Tu retina no tiene segunda oportunidad.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
   <style>
   /* ═══════════════════════════════════════
@@ -143,36 +144,36 @@
     color:var(--gold); opacity:.75;
   }
 
-  /* countdown bar */
-  .cd-bar {
-    position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
-    z-index:20; display:flex; align-items:center; gap:18px;
-    background:rgba(10,22,40,.6); backdrop-filter:blur(14px);
-    border:1px solid rgba(212,175,55,.18); border-radius:100px;
-    padding:10px 26px; white-space:nowrap;
+  /* hero CTA button */
+  .hero-cta {
+    position:relative; margin-top:20px;
+    padding:10px 28px; border-radius:4px;
+    font-family:'Orbitron',sans-serif; font-size:.75rem;
+    font-weight:600; letter-spacing:1px; text-transform:uppercase;
+    cursor:pointer; background:transparent;
+    transition:background .3s, color .3s;
+    display:inline-block;
   }
-  .cd-label { font-family:'Orbitron',sans-serif; font-size:.55rem; letter-spacing:2px; color:var(--gold); opacity:.65; }
-  .cd-units { display:flex; gap:14px; }
-  .cd-unit  { display:flex; flex-direction:column; align-items:center; }
-  .cd-num   { font-family:'Orbitron',sans-serif; font-size:.95rem; font-weight:700; color:var(--tl); line-height:1; }
-  .cd-tag   { font-size:.5rem; color:var(--gold); letter-spacing:1px; text-transform:uppercase; opacity:.6; margin-top:2px; }
-  .cd-sep   { font-family:'Orbitron',sans-serif; font-size:.9rem; color:var(--gold); opacity:.4; align-self:center; }
+  .half--light .hero-cta { border:1px solid var(--navy); color:var(--navy); }
+  .half--light .hero-cta:hover { background:var(--navy); color:#fff; }
+  .half--dark  .hero-cta { border:1px solid var(--gold); color:var(--gold); }
+  .half--dark  .hero-cta:hover { background:var(--gold); color:var(--navy); }
 
-  /* scroll hint */
-  .scroll-hint {
-    position:absolute; bottom:74px; left:50%; transform:translateX(-50%);
-    z-index:20; display:flex; flex-direction:column; align-items:center; gap:5px;
-    opacity:.4; transition:opacity .4s; pointer-events:none;
+  /* ── countdown section (below map) ─── */
+  #countdown {
+    background:var(--dark); padding:40px 5% 60px;
+    text-align:center; border-top:1px solid rgba(212,175,55,.08);
   }
-  .scroll-hint.gone { opacity:0; }
-  .scroll-hint span { font-family:'Orbitron',sans-serif; font-size:.55rem; letter-spacing:3px; color:var(--gold); }
-  .scroll-arrow {
-    width:14px; height:14px;
-    border-right:2px solid var(--gold); border-bottom:2px solid var(--gold);
-    transform:rotate(45deg);
-    animation:ab 1.7s ease-in-out infinite;
+  .cd-title-text {
+    font-family:'Orbitron',sans-serif; font-size:.8rem;
+    letter-spacing:2px; text-transform:uppercase;
+    color:var(--gold); opacity:.7; margin-bottom:28px; display:block;
   }
-  @keyframes ab { 0%,100%{transform:rotate(45deg) translate(0,0)} 50%{transform:rotate(45deg) translate(3px,3px)} }
+  .cd-new-units { display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap; }
+  .cd-new-unit  { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .cd-new-num   { font-family:'Orbitron',sans-serif; font-size:2.5rem; font-weight:700; color:var(--gold); line-height:1; }
+  .cd-new-tag   { font-size:.6rem; color:var(--gold); letter-spacing:2px; text-transform:uppercase; opacity:.55; }
+  .cd-new-sep   { font-family:'Orbitron',sans-serif; font-size:2rem; color:var(--gold); opacity:.3; align-self:center; margin-bottom:18px; }
 
   /* particles */
   .particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
@@ -185,8 +186,9 @@
      SECTION 2 — TRANSITION / HEADLINE
   ═══════════════════════════════════════ */
   #transition {
-    position:relative; height:100vh; overflow:hidden;
-    display:flex; align-items:center; justify-content:center;
+    position:relative; min-height:100vh; overflow:hidden;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    padding:60px 24px;
     background:linear-gradient(135deg,var(--light) 0%,#e8c84a 28%,var(--gold) 46%,var(--purple) 68%,var(--dark) 100%);
   }
   .t-panel { position:absolute; top:0; bottom:0; width:50%; z-index:2; transition:transform .95s cubic-bezier(.77,0,.175,1); }
@@ -257,14 +259,14 @@
      SECTION 4 — DATOS CURIOSOS
   ═══════════════════════════════════════ */
   #facts {
-    padding:120px 5%;
+    padding:80px 5%;
     background:linear-gradient(160deg, #0D1B35 0%, var(--dark) 60%, #0A1628 100%);
   }
-  #facts .section-title { text-align:center; margin-bottom:64px; }
+  #facts .section-title { text-align:center; max-width:800px; margin:0 auto 64px; }
 
   .facts-grid {
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(3,1fr);
     gap:22px; max-width:1100px; margin:0 auto;
   }
   .fact-card {
@@ -290,49 +292,56 @@
   .fact-desc  { font-size:.88rem; color:var(--tl); opacity:.6; line-height:1.7; font-weight:300; }
 
   /* ═══════════════════════════════════════
-     SECTION 5 — MAPA DE ESPAÑA
+     SECTION 5 — MAPA LEAFLET
   ═══════════════════════════════════════ */
   #map {
-    background:var(--light); padding:120px 5%;
+    background:var(--dark); padding:120px 5%;
     text-align:center;
   }
-  #map .eyebrow { color:var(--blue); }
-  #map .section-title { color:var(--td); }
-  #map .section-body  { color:var(--td); max-width:640px; margin:0 auto 56px; }
+  #map .eyebrow { color:var(--gold); }
+  #map .section-title { color:var(--tl); }
+  #map .section-body  { color:var(--tl); opacity:.75; max-width:640px; margin:0 auto 56px; }
 
-  .map-container {
-    position:relative; max-width:780px; margin:0 auto 36px;
-    border-radius:24px; overflow:hidden;
-    background:rgba(30,58,138,.05);
-    border:1px solid rgba(30,58,138,.12);
-    padding:24px;
+  #leaflet-map {
+    height:600px; border-radius:16px; overflow:hidden;
+    border:1px solid rgba(212,175,55,.2);
+    max-width:1100px; margin:0 auto;
   }
-
-  #spain-map { width:100%; height:auto; display:block; }
-
-  /* city tooltip */
-  .map-tooltip {
-    position:absolute; pointer-events:none; z-index:30;
-    background:rgba(10,22,40,.92); backdrop-filter:blur(8px);
-    border:1px solid rgba(212,175,55,.35); border-radius:10px;
-    padding:10px 14px; transform:translate(-50%,-110%);
-    opacity:0; transition:opacity .2s; white-space:nowrap;
-  }
-  .map-tooltip.show { opacity:1; }
-  .map-tooltip strong { font-family:'Orbitron',sans-serif; font-size:.7rem; color:var(--gold); display:block; margin-bottom:3px; }
-  .map-tooltip span   { font-size:.72rem; color:var(--tl); opacity:.8; }
-
-  .map-legend {
-    display:flex; justify-content:center; gap:28px; flex-wrap:wrap; margin-top:8px;
-  }
-  .legend-item { display:flex; align-items:center; gap:8px; font-size:.8rem; color:var(--td); opacity:.75; }
-  .legend-dot  { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
-  .ld-gold   { background:var(--gold); }
-  .ld-purple { background:var(--purple); }
 
   .map-note {
     max-width:640px; margin:36px auto 0;
-    font-size:.92rem; color:var(--td); opacity:.7; line-height:1.8; font-weight:300;
+    font-size:.92rem; color:var(--tl); opacity:.65; line-height:1.8; font-weight:300;
+  }
+
+  /* Leaflet popup overrides */
+  .eclypse-popup .leaflet-popup-content-wrapper {
+    background:rgba(10,22,40,.95); border:1px solid var(--gold);
+    border-radius:12px; color:var(--tl); box-shadow:0 8px 32px rgba(0,0,0,.5);
+    padding:0;
+  }
+  .eclypse-popup .leaflet-popup-content { margin:14px 18px; }
+  .eclypse-popup .leaflet-popup-tip { background:rgba(10,22,40,.95); }
+  .eclypse-popup .leaflet-popup-close-button { color:var(--gold)!important; top:6px; right:8px; }
+  .popup-city { font-family:'Orbitron',sans-serif; font-size:.72rem; color:var(--gold); margin-bottom:6px; letter-spacing:.5px; }
+  .popup-info { font-size:.8rem; color:var(--tl); opacity:.88; line-height:1.75; }
+
+  /* Borobia pulse animation */
+  @keyframes mapPulse {
+    0%,100%{ box-shadow:0 0 0 0 rgba(212,175,55,.7); }
+    50%{ box-shadow:0 0 0 12px rgba(212,175,55,0); }
+  }
+  .borobia-marker {
+    width:16px; height:16px; border-radius:50%;
+    background:var(--gold); border:2px solid #fff;
+    animation:mapPulse 1.5s ease infinite;
+  }
+  .city-marker-gold {
+    width:10px; height:10px; border-radius:50%;
+    background:#D4AF37; border:1.5px solid rgba(255,255,255,.6);
+  }
+  .city-marker-purple {
+    width:10px; height:10px; border-radius:50%;
+    background:#6366F1; border:1.5px solid rgba(255,255,255,.6);
   }
 
   /* ═══════════════════════════════════════
@@ -342,7 +351,35 @@
     background:var(--dark); padding:120px 5%;
   }
   #timeline .section-title { text-align:center; margin-bottom:16px; }
-  .timeline-sub { text-align:center; font-size:.88rem; color:var(--tl); opacity:.5; margin-bottom:64px; font-style:italic; }
+  .timeline-sub { text-align:center; font-size:.88rem; color:var(--tl); opacity:.5; margin-bottom:32px; font-style:italic; }
+
+  /* city selector bar */
+  .tl-city-bar {
+    max-width:900px; margin:0 auto 40px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center;
+  }
+  .tl-ciudad-label {
+    font-family:'Orbitron',sans-serif; font-size:.82rem; font-weight:600;
+    color:var(--gold); letter-spacing:.5px;
+  }
+  #tl-city-select {
+    font-family:'Orbitron',sans-serif; font-size:.65rem; letter-spacing:.5px;
+    background:rgba(10,22,40,.8); color:var(--tl);
+    border:1px solid rgba(212,175,55,.4); border-radius:6px;
+    padding:8px 12px; cursor:pointer; outline:none;
+    transition:border-color .2s;
+  }
+  #tl-city-select:hover, #tl-city-select:focus { border-color:var(--gold); }
+  #tl-city-select option { background:var(--navy); }
+  .tl-back-map {
+    font-family:'Orbitron',sans-serif; font-size:.6rem; letter-spacing:1px;
+    padding:7px 16px; border-radius:4px; border:1px solid rgba(212,175,55,.35);
+    background:transparent; color:rgba(212,175,55,.7); cursor:pointer;
+    transition:all .2s; text-transform:uppercase;
+  }
+  .tl-back-map:hover { border-color:var(--gold); color:var(--gold); }
+  .tl-item.tl-na { opacity:.28; }
+  .tl-item.tl-na .tl-time::after { content:' — no visible'; color:var(--tl); opacity:.5; font-size:.65em; }
 
   .tl-track {
     position:relative; max-width:900px; margin:0 auto;
@@ -385,7 +422,26 @@
   /* ═══════════════════════════════════════
      SECTION 7 — PACKS
   ═══════════════════════════════════════ */
-  #packs { background:linear-gradient(180deg,var(--dark) 0%,#0D1F3C 100%); padding:120px 5%; }
+  #packs {
+    background:linear-gradient(180deg,var(--dark) 0%,#0D1F3C 100%);
+    padding:120px 5%;
+    transition:background .4s ease, color .4s ease;
+  }
+  /* Solar Light selected → light theme */
+  #packs.packs--light {
+    background:#fff;
+  }
+  #packs.packs--light .section-title { color:var(--navy); }
+  #packs.packs--light .eyebrow { color:var(--blue); }
+  #packs.packs--light .packs-sub { color:var(--td); }
+  #packs.packs--light .pack {
+    background:rgba(0,0,0,.02); border-color:rgba(212,175,55,.3);
+  }
+  #packs.packs--light .pack-qty,
+  #packs.packs--light .pack-desc,
+  #packs.packs--light .pack-upr { color:var(--navy); }
+  #packs.packs--light .pack-price { color:var(--blue); }
+  #packs.packs--light .packs-guarantees { color:var(--td); }
   #packs .section-title { text-align:center; }
   #packs .eyebrow { text-align:center; display:block; }
   .packs-sub { text-align:center; font-size:.95rem; color:var(--tl); opacity:.6; font-weight:300; margin-bottom:40px; }
@@ -489,16 +545,20 @@
   /* ═══════════════════════════════════════
      RESPONSIVE
   ═══════════════════════════════════════ */
+  @media(min-width:769px) and (max-width:1024px) {
+    .facts-grid { grid-template-columns:repeat(2,1fr); }
+  }
+
   @media(max-width:768px) {
     #hero-sticky { flex-direction:column; }
     #hero-sticky::after { left:0; right:0; top:50%; bottom:auto; width:auto; height:1px; transform:none; }
-    .half { height:50vh; flex:none; padding:0 16px 48px; }
-    .half-logo { top:14px; }
-    .glasses-wrap { width:min(240px,82%); }
-    .model-name { font-size:1rem; }
-    .cd-bar { padding:8px 16px; gap:10px; }
-    .cd-num { font-size:.8rem; }
-    .cd-label { display:none; }
+    .half { height:50vh; flex:none; padding:0 16px 36px; }
+    .half-date { font-size:.55rem; top:8px; }
+    .half-logo { top:24px; }
+    .glasses-wrap { width:min(200px,78%); }
+    .model-name { font-size:.95rem; }
+    .model-cert { font-size:.48rem; }
+    .hero-cta { font-size:.65rem; padding:8px 20px; margin-top:12px; }
     .packs-row { flex-direction:column; align-items:center; }
     .pack { max-width:320px; width:100%; }
     #why, #facts, #map, #timeline, #packs { padding:80px 5%; }
@@ -506,6 +566,10 @@
     .why-grid { grid-template-columns:1fr; }
     .facts-grid { grid-template-columns:1fr; }
     .tl-track { padding-left:22px; }
+    #leaflet-map { height:450px; }
+    .cd-new-num { font-size:1.8rem; }
+    .cd-new-sep { font-size:1.5rem; }
+    .tl-city-bar { gap:10px; }
   }
   </style>
 </head>
@@ -547,6 +611,8 @@
       <p class="model-sub">Pureza y Claridad</p>
       <p class="model-cert">Protección ISO 12312-2 · CE</p>
 
+      <button class="hero-cta" onclick="setModel('gold');document.getElementById('packs').scrollIntoView({behavior:'smooth'})" aria-label="Reservar Solar Light">Reservar ahora</button>
+
       <div class="particles" id="pt-light" aria-hidden="true"></div>
     </div>
 
@@ -580,27 +646,9 @@
       <p class="model-sub">Inmersión Total</p>
       <p class="model-cert">Protección ISO 12312-2 · CE</p>
 
+      <button class="hero-cta" onclick="setModel('purple');document.getElementById('packs').scrollIntoView({behavior:'smooth'})" aria-label="Reservar Eclipse Dark">Reservar ahora</button>
+
       <div class="particles" id="pt-dark" aria-hidden="true"></div>
-    </div>
-
-    <!-- Countdown bar -->
-    <div class="cd-bar" role="timer" aria-label="Cuenta atrás para el eclipse solar">
-      <span class="cd-label">ECLIPSE TOTAL · ESPAÑA</span>
-      <div class="cd-units">
-        <div class="cd-unit"><span class="cd-num" id="cd-d">---</span><span class="cd-tag">días</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><span class="cd-tag">h</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><span class="cd-tag">min</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><span class="cd-tag">seg</span></div>
-      </div>
-      <span class="cd-label">12 · 08 · 2026</span>
-    </div>
-
-    <!-- Scroll hint -->
-    <div class="scroll-hint" id="scroll-hint" aria-hidden="true">
-      <span>SCROLL</span><div class="scroll-arrow"></div>
     </div>
 
   </div>
@@ -614,8 +662,8 @@
   <div class="t-panel t-left"  id="t-left"  aria-hidden="true"></div>
   <div class="t-panel t-right" id="t-right" aria-hidden="true"></div>
   <div class="t-content" id="t-content">
-    <h2 class="t-headline" id="trans-title">Tu retina no tiene<br>segunda oportunidad.</h2>
-    <p class="t-sub">El eclipse solar total del 12 de agosto de 2026 será el espectáculo astronómico del siglo en España. Pero sin protección certificada, bastará un instante para dañar tu visión de forma irreversible.</p>
+    <h2 class="t-headline" id="trans-title">La pregunta no es si lo vas a ver, sino dónde y cómo.</h2>
+    <p class="t-sub">El eclipse solar total del 12 de agosto de 2026 será el espectáculo astronómico del siglo en España. Asegúrate de vivirlo con la protección adecuada.</p>
     <div class="t-stat" role="note">
       <div class="t-stat-num" id="stat-secs" aria-live="polite">0</div>
       <div class="t-stat-label">segundos mirando al sol sin protección<br>son suficientes para causar daño permanente en la retina</div>
@@ -741,18 +789,12 @@
 ════════════════════════════════════════════════════ -->
 <section id="map" aria-labelledby="map-title">
   <span class="eyebrow">Geografía del eclipse</span>
-  <h2 class="section-title section-title--dark" id="map-title">¿Dónde se verá el eclipse total?</h2>
-  <p class="section-body fade-in">La franja de totalidad cruzará España de noroeste a sureste el 12 de agosto de 2026.</p>
+  <h2 class="section-title" id="map-title">¿Dónde se verá el eclipse total?</h2>
+  <p class="section-body fade-in">La franja de totalidad cruzará España de noroeste a sureste el 12 de agosto de 2026. Cada punto de la banda experimenta entre 1 y casi 3 minutos de oscuridad total.</p>
 
-  <div class="map-container" role="img" aria-label="Mapa de España con la franja de totalidad del eclipse solar del 12 de agosto de 2026">
-    <!-- Tooltip -->
-    <div class="map-tooltip" id="map-tooltip" role="tooltip" aria-live="polite">
-      <strong id="tt-city"></strong>
-      <span id="tt-info"></span>
-    </div>
+  <div id="leaflet-map" aria-label="Mapa interactivo del eclipse solar del 12 de agosto de 2026 en España"></div>
 
-    <!-- SVG map — simplified Spain outline + totality band + cities -->
-    <svg id="spain-map" viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg">
+  <!-- old SVG removed --><svg style="display:none">
       <defs>
         <linearGradient id="band-grad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%"   stop-color="#D4AF37" stop-opacity=".08"/>
@@ -890,18 +932,28 @@
       <!-- Canarias hint -->
       <rect x="30" y="400" width="100" height="56" rx="6" fill="rgba(30,58,138,.05)" stroke="rgba(30,58,138,.2)" stroke-width="1" stroke-dasharray="4 3"/>
       <text x="80" y="432" font-family="Work Sans,sans-serif" font-size="9" fill="rgba(30,58,138,.5)" text-anchor="middle">Islas Canarias</text>
-      <text x="80" y="444" font-family="Work Sans,sans-serif" font-size="8" fill="rgba(30,58,138,.4)" text-anchor="middle">(eclipse parcial ~72%)</text>
     </svg>
-  </div>
-
-  <div class="map-legend" role="list">
-    <div class="legend-item" role="listitem"><span class="legend-dot ld-gold"></span>Franja de totalidad (100%)</div>
-    <div class="legend-item" role="listitem"><span class="legend-dot ld-purple"></span>Eclipse parcial</div>
-  </div>
 
   <p class="map-note fade-in">
     Aunque toda España verá al menos un eclipse parcial, solo dentro de la franja de totalidad se experimentará la oscuridad completa, el descenso brusco de temperatura y la corona solar a simple vista. <strong>Si puedes, desplázate a la franja.</strong>
   </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     §5b CUENTA ATRÁS
+════════════════════════════════════════════════════ -->
+<section id="countdown">
+  <span class="cd-title-text">Cuenta atrás para el eclipse</span>
+  <div class="cd-new-units" role="timer" aria-label="Cuenta atrás para el eclipse solar del 12 de agosto de 2026">
+    <div class="cd-new-unit"><span class="cd-new-num" id="cd-d">---</span><span class="cd-new-tag">Días</span></div>
+    <span class="cd-new-sep">:</span>
+    <div class="cd-new-unit"><span class="cd-new-num" id="cd-h">--</span><span class="cd-new-tag">Horas</span></div>
+    <span class="cd-new-sep">:</span>
+    <div class="cd-new-unit"><span class="cd-new-num" id="cd-m">--</span><span class="cd-new-tag">Min</span></div>
+    <span class="cd-new-sep">:</span>
+    <div class="cd-new-unit"><span class="cd-new-num" id="cd-s">--</span><span class="cd-new-tag">Seg</span></div>
+  </div>
 </section>
 
 
@@ -911,13 +963,42 @@
 <section id="timeline" aria-labelledby="tl-title">
   <span class="eyebrow" style="text-align:center;display:block;">Minuto a minuto</span>
   <h2 class="section-title" id="tl-title">Cronología del eclipse<br>— 12 de agosto de 2026</h2>
-  <p class="timeline-sub">Horarios aproximados para el centro peninsular (UTC+2). Consulta los horarios exactos para tu localización.</p>
+  <p class="timeline-sub">Horarios aproximados (UTC+2). Selecciona una ciudad para ver sus horarios exactos.</p>
+
+  <!-- city selector bar -->
+  <div class="tl-city-bar">
+    <span class="tl-ciudad-label" id="tl-ciudad-name">Borobia — punto óptimo</span>
+    <select id="tl-city-select" aria-label="Seleccionar ciudad">
+      <option value="borobia" selected>Borobia (máx. 2m 57s)</option>
+      <optgroup label="── Eclipse total ──">
+        <option value="a-coruna">A Coruña</option>
+        <option value="oviedo">Oviedo</option>
+        <option value="gijon">Gijón</option>
+        <option value="santander">Santander</option>
+        <option value="bilbao">Bilbao</option>
+        <option value="vitoria">Vitoria-Gasteiz</option>
+        <option value="burgos">Burgos</option>
+        <option value="valladolid">Valladolid</option>
+        <option value="zaragoza">Zaragoza</option>
+        <option value="castellon">Castellón</option>
+        <option value="valencia">València</option>
+        <option value="palma">Palma de Mallorca</option>
+      </optgroup>
+      <optgroup label="── Eclipse parcial ──">
+        <option value="barcelona">Barcelona (~99.8%)</option>
+        <option value="madrid">Madrid (~99%)</option>
+        <option value="sevilla">Sevilla (~82%)</option>
+        <option value="malaga">Málaga (~78%)</option>
+      </optgroup>
+    </select>
+    <button class="tl-back-map" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">Ver en el mapa ↑</button>
+  </div>
 
   <div class="tl-track" role="list">
 
-    <div class="tl-item" style="transition-delay:0s" role="listitem">
+    <div class="tl-item" id="tli-1" style="transition-delay:0s" role="listitem">
       <div class="tl-dot" aria-hidden="true"></div>
-      <div class="tl-time">10:30 h</div>
+      <div class="tl-time" id="tl-t1">~19:30 h</div>
       <div class="tl-phase">Primer contacto</div>
       <p class="tl-desc">La Luna comienza a cubrir el disco solar. El eclipse parcial da inicio. La luz no cambia aún de forma perceptible, pero el proceso ya es imparable.</p>
       <span class="tl-warn on" aria-label="Usar gafas">
@@ -926,9 +1007,9 @@
       </span>
     </div>
 
-    <div class="tl-item" style="transition-delay:.08s" role="listitem">
+    <div class="tl-item" id="tli-2" style="transition-delay:.08s" role="listitem">
       <div class="tl-dot" aria-hidden="true"></div>
-      <div class="tl-time">11:45 h</div>
+      <div class="tl-time" id="tl-t2">~20:15 h</div>
       <div class="tl-phase">Eclipse parcial avanzado</div>
       <p class="tl-desc">El sol ha perdido más del 80% de su superficie visible. La luz del día adopta una tonalidad extraña y las sombras de los árboles proyectan medias lunas en el suelo.</p>
       <span class="tl-warn on" aria-label="Mantén las gafas">
@@ -937,9 +1018,9 @@
       </span>
     </div>
 
-    <div class="tl-item" style="transition-delay:.16s" role="listitem">
+    <div class="tl-item" id="tli-3" style="transition-delay:.16s" role="listitem">
       <div class="tl-dot" aria-hidden="true"></div>
-      <div class="tl-time">12:01 h</div>
+      <div class="tl-time" id="tl-t3">~20:27 h</div>
       <div class="tl-phase">Perlas de Baily</div>
       <p class="tl-desc">Los últimos rayos de sol se filtran entre los valles y montañas de la Luna, creando una cadena de puntos de luz brillantes sobre el limbo lunar. Un fenómeno de segundos.</p>
       <span class="tl-warn on" aria-label="Gafas puestas">
@@ -948,9 +1029,9 @@
       </span>
     </div>
 
-    <div class="tl-item" style="transition-delay:.24s" role="listitem">
+    <div class="tl-item" id="tli-4" style="transition-delay:.24s" role="listitem">
       <div class="tl-dot" aria-hidden="true"></div>
-      <div class="tl-time">12:02 h</div>
+      <div class="tl-time" id="tl-t4">~20:28 h</div>
       <div class="tl-phase">Anillo de diamante</div>
       <p class="tl-desc">El último rayo solar forma un destello brillante junto a la oscuridad de la corona emergente. El momento más icónico y fotografiado de cualquier eclipse total.</p>
       <span class="tl-warn on" aria-label="Gafas aún puestas">
@@ -959,20 +1040,20 @@
       </span>
     </div>
 
-    <div class="tl-item" style="transition-delay:.32s" role="listitem">
+    <div class="tl-item" id="tli-5" style="transition-delay:.32s" role="listitem">
       <div class="tl-dot total" aria-hidden="true"></div>
-      <div class="tl-time" style="color:#fbbf24;font-size:.85rem;">★ 12:03 h — 12:06 h ★</div>
+      <div class="tl-time" id="tl-t5" style="color:#fbbf24;font-size:.85rem;">★ 20:28 h — 20:31 h ★</div>
       <div class="tl-phase" style="color:var(--gold);font-size:1.15rem;">¡TOTALIDAD!</div>
-      <p class="tl-desc">Oscuridad total. Las estrellas y planetas se vuelven visibles. La temperatura desciende varios grados. La corona solar —la atmósfera exterior— se despliega en todo su esplendor. Es el único momento de 2 min 57 seg en el que puedes mirar al sol directamente.</p>
-      <span class="tl-warn off" aria-label="Puedes quitar las gafas durante la totalidad">
+      <p class="tl-desc">Oscuridad total. Las estrellas y planetas se vuelven visibles. La temperatura desciende varios grados. La corona solar —la atmósfera exterior— se despliega en todo su esplendor.</p>
+      <span class="tl-warn off" id="tl-total-dur" aria-label="Puedes quitar las gafas durante la totalidad">
         <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6a9 9 0 0110 0M4 6a5 5 0 014 0"/><circle cx="6" cy="6" r="1.2" fill="currentColor"/><line x1="10" y1="2" x2="2" y2="10" stroke="#f87171"/></svg>
-        ÚNICO MOMENTO SIN GAFAS · 2 min 57 seg
+        <span id="tl-dur-text">ÚNICO MOMENTO SIN GAFAS · 2 min 57 seg</span>
       </span>
     </div>
 
-    <div class="tl-item" style="transition-delay:.4s" role="listitem">
+    <div class="tl-item" id="tli-6" style="transition-delay:.4s" role="listitem">
       <div class="tl-dot" aria-hidden="true"></div>
-      <div class="tl-time">12:06 h</div>
+      <div class="tl-time" id="tl-t6">~20:31 h</div>
       <div class="tl-phase">Fin de totalidad</div>
       <p class="tl-desc">Segundo anillo de diamante. La fotosfera solar vuelve a ser visible. El peligro regresa en décimas de segundo. Vuelve a protegerte inmediatamente.</p>
       <span class="tl-warn on" aria-label="Ponte las gafas inmediatamente">
@@ -981,9 +1062,9 @@
       </span>
     </div>
 
-    <div class="tl-item" style="transition-delay:.48s" role="listitem">
+    <div class="tl-item" id="tli-7" style="transition-delay:.48s" role="listitem">
       <div class="tl-dot" aria-hidden="true"></div>
-      <div class="tl-time">13:30 h</div>
+      <div class="tl-time" id="tl-t7">~21:30 h</div>
       <div class="tl-phase">Último contacto</div>
       <p class="tl-desc">La Luna se separa completamente del disco solar. El eclipse ha concluido. El próximo eclipse total sobre España: 2070.</p>
     </div>
@@ -1008,10 +1089,7 @@
   <div class="packs-row model-gold" id="packs-row" role="list"></div>
 
   <p class="packs-guarantees" aria-label="Garantías de compra">
-    <span>🔒 Pago seguro</span>
-    <span>📦 Envío en 24-48h</span>
-    <span>✅ 100% certificadas</span>
-    <span>↩️ Devolución 14 días</span>
+    Pago seguro · Envío en 24-48h · 100% certificadas · Devolución 14 días
   </p>
 </section>
 
@@ -1063,6 +1141,7 @@
 <!-- ═══════════════════════════════════════════════════
      SCRIPTS
 ════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 'use strict';
 
@@ -1106,7 +1185,6 @@ document.head.insertAdjacentHTML('beforeend','<style>@keyframes twk{0%,100%{tran
 const scrollZone = document.getElementById('scroll-zone');
 const glLight    = document.getElementById('gl-light');
 const glDark     = document.getElementById('gl-dark');
-const hint       = document.getElementById('scroll-hint');
 let raf=false;
 
 function getP(){
@@ -1119,30 +1197,21 @@ function frame(){
   raf=false;
   const p=getP();
 
-  // phase 1: 0→0.35 — enter (scale up + rotateY, opacity in)
-  // phase 2: 0.35→0.65 — float (oscillate rotateY + translateY)
-  // phase 3: 0.65→1 — exit (scale down + opacity out)
+  // p=0      : glasses fully visible, no animation
+  // p=0→0.5  : float — oscillate rotateY ±6°, translateY ±10px
+  // p=0.5→1  : fade out — opacity 1→0, scale 1→0.92
 
-  let scaleL, scaleD, rotL, rotD, transY, opL, opD;
+  let scaleL=1, scaleD=1, rotL=0, rotD=0, transY=0, opL=1, opD=1;
 
-  if(p <= 0.35){
-    const t=p/0.35;
-    const e=easeOut(t);
-    scaleL=0.7+0.3*e; scaleD=0.7+0.3*e;
-    rotL=8-8*e; rotD=-8+8*e;
-    transY=0; opL=0.5+0.5*e; opD=0.5+0.5*e;
-  } else if(p <= 0.65){
-    const t=(p-0.35)/0.30;
-    scaleL=1; scaleD=1;
-    rotL=Math.sin(t*Math.PI*2)*8;
-    rotD=Math.sin(t*Math.PI*2)*-8;
-    transY=Math.sin(t*Math.PI*2)*-15;
-    opL=1; opD=1;
+  if(p <= 0.5){
+    const t=p/0.5;
+    rotL  = Math.sin(t*Math.PI*2)*6;
+    rotD  = Math.sin(t*Math.PI*2)*-6;
+    transY= Math.sin(t*Math.PI*2)*10;
   } else {
-    const t=(p-0.65)/0.35;
+    const t=(p-0.5)/0.5;
     const e=easeOut(t);
-    scaleL=1-0.15*e; scaleD=1-0.15*e;
-    rotL=0; rotD=0; transY=0;
+    scaleL=1-0.08*e; scaleD=1-0.08*e;
     opL=1-e; opD=1-e;
   }
 
@@ -1154,10 +1223,10 @@ function frame(){
   /* particle opacity tied to scroll progress */
   const pf=Math.min(1,p*3);
   document.querySelectorAll('.p').forEach(el=>{ el.style.opacity=(parseFloat(el.dataset.b)*pf).toString(); });
-
-  hint.classList.toggle('gone', p>0.05);
 }
 
+// Set initial state immediately — glasses visible at p=0
+requestAnimationFrame(frame);
 window.addEventListener('scroll',()=>{ if(!raf){raf=true;requestAnimationFrame(frame);} },{passive:true});
 
 /* ── TRANSITION: panels open ──────────────────────── */
@@ -1214,33 +1283,7 @@ const tlObs=new IntersectionObserver(entries=>{
 },{threshold:.1});
 tlObs.observe(document.getElementById('timeline'));
 
-/* ── MAP TOOLTIPS ─────────────────────────────────── */
-const tooltip=document.getElementById('map-tooltip');
-const ttCity=document.getElementById('tt-city');
-const ttInfo=document.getElementById('tt-info');
-const svgEl=document.getElementById('spain-map');
-
-document.querySelectorAll('.city-dot').forEach(g=>{
-  g.style.cursor='pointer';
-  function showTip(e){
-    const svgRect=svgEl.getBoundingClientRect();
-    const mapCont=svgEl.closest('.map-container').getBoundingClientRect();
-    const vb=svgEl.viewBox.baseVal;
-    const scaleX=svgEl.clientWidth/vb.width;
-    const scaleY=svgEl.clientHeight/vb.height;
-    const t=g.transform.baseVal[0].matrix;
-    const cx=svgRect.left+t.e*scaleX-mapCont.left;
-    const cy=svgRect.top +t.f*scaleY-mapCont.top;
-    tooltip.style.left=cx+'px'; tooltip.style.top=cy+'px';
-    ttCity.textContent=g.dataset.city;
-    ttInfo.textContent=`${g.dataset.pct} cobertura · Máximo ${g.dataset.hora}${g.dataset.dur!=='Parcial'?' · '+g.dataset.dur:''}`;
-    tooltip.classList.add('show');
-  }
-  g.addEventListener('mouseenter',showTip);
-  g.addEventListener('touchstart',showTip,{passive:true});
-  g.addEventListener('mouseleave',()=>tooltip.classList.remove('show'));
-  g.addEventListener('touchend',()=>setTimeout(()=>tooltip.classList.remove('show'),1600));
-});
+/* ── MAP TOOLTIPS — handled by Leaflet popups ─────── */
 
 /* ── PACKS ────────────────────────────────────────── */
 const PACKS=[
@@ -1284,7 +1327,9 @@ function renderPacks(){
 function setModel(m){
   activeModel=m==='gold'?'solar-light':'eclipse-dark';
   const row=document.getElementById('packs-row');
+  const section=document.getElementById('packs');
   row.className='packs-row model-'+m;
+  section.classList.toggle('packs--light', m==='gold');
   row.querySelectorAll('.pack').forEach(c=>c.classList.remove('show'));
   document.getElementById('btn-gold').classList.toggle('on',m==='gold');
   document.getElementById('btn-purple').classList.toggle('on',m==='purple');
@@ -1308,6 +1353,217 @@ const packsObs=new IntersectionObserver(entries=>{
   });
 },{threshold:.15});
 packsObs.observe(document.getElementById('packs'));
+
+/* ── CIUDAD DATA ─────────────────────────────────── */
+const ciudadesData={
+  'borobia':{nombre:'Borobia — punto óptimo',tipo:'total',
+    fases:{primerContacto:'~19:30h',parcialAvanzado:'~20:15h',perlasBaily:'~20:27h',anilloDiamante:'~20:28h',totalidadInicio:'~20:28h',totalidadFin:'~20:31h',ultimoContacto:'~21:30h'},duracion:'2 min 57s'},
+  'a-coruna':{nombre:'A Coruña',tipo:'total',
+    fases:{primerContacto:'19:30h',parcialAvanzado:'~20:15h',perlasBaily:'~20:27h',anilloDiamante:'~20:27:30h',totalidadInicio:'20:27:40h',totalidadFin:'20:28:57h',ultimoContacto:'~21:25h'},duracion:'1 min 17s'},
+  'oviedo':{nombre:'Oviedo',tipo:'total',
+    fases:{primerContacto:'19:31h',parcialAvanzado:'~20:15h',perlasBaily:'~20:26h',anilloDiamante:'~20:27h',totalidadInicio:'20:27:05h',totalidadFin:'20:28:54h',ultimoContacto:'~21:25h'},duracion:'1 min 49s'},
+  'gijon':{nombre:'Gijón',tipo:'total',
+    fases:{primerContacto:'19:31h',parcialAvanzado:'~20:14h',perlasBaily:'~20:26h',anilloDiamante:'~20:26:40h',totalidadInicio:'20:26:48h',totalidadFin:'20:28:33h',ultimoContacto:'~21:25h'},duracion:'1 min 45s'},
+  'santander':{nombre:'Santander',tipo:'total',
+    fases:{primerContacto:'19:31h',parcialAvanzado:'~20:15h',perlasBaily:'~20:26h',anilloDiamante:'~20:26:50h',totalidadInicio:'20:26:57h',totalidadFin:'20:28:01h',ultimoContacto:'~21:26h'},duracion:'1 min 04s'},
+  'bilbao':{nombre:'Bilbao',tipo:'total',
+    fases:{primerContacto:'19:31h',parcialAvanzado:'~20:15h',perlasBaily:'~20:27h',anilloDiamante:'~20:27:20h',totalidadInicio:'20:27:23h',totalidadFin:'20:27:54h',ultimoContacto:'~21:26h'},duracion:'31s'},
+  'vitoria':{nombre:'Vitoria-Gasteiz',tipo:'total',
+    fases:{primerContacto:'19:32h',parcialAvanzado:'~20:16h',perlasBaily:'~20:27h',anilloDiamante:'~20:27:35h',totalidadInicio:'20:27:43h',totalidadFin:'20:28:47h',ultimoContacto:'~21:27h'},duracion:'1 min 04s'},
+  'burgos':{nombre:'Burgos',tipo:'total',
+    fases:{primerContacto:'19:33h',parcialAvanzado:'~20:17h',perlasBaily:'~20:28h',anilloDiamante:'~20:28:15h',totalidadInicio:'20:28:24h',totalidadFin:'20:30:08h',ultimoContacto:'~21:28h'},duracion:'1 min 44s'},
+  'valladolid':{nombre:'Valladolid',tipo:'total',
+    fases:{primerContacto:'19:34h',parcialAvanzado:'~20:18h',perlasBaily:'~20:29h',anilloDiamante:'~20:29:45h',totalidadInicio:'20:29:53h',totalidadFin:'20:31:20h',ultimoContacto:'~21:29h'},duracion:'1 min 27s'},
+  'zaragoza':{nombre:'Zaragoza',tipo:'total',
+    fases:{primerContacto:'19:34h',parcialAvanzado:'~20:18h',perlasBaily:'~20:28h',anilloDiamante:'~20:28:55h',totalidadInicio:'20:29:02h',totalidadFin:'20:30:27h',ultimoContacto:'~21:29h'},duracion:'1 min 25s'},
+  'castellon':{nombre:'Castellón de la Plana',tipo:'total',
+    fases:{primerContacto:'19:37h',parcialAvanzado:'~20:20h',perlasBaily:'~20:31h',anilloDiamante:'~20:31:15h',totalidadInicio:'20:31:20h',totalidadFin:'20:32:54h',ultimoContacto:'~21:31h'},duracion:'1 min 34s'},
+  'valencia':{nombre:'València',tipo:'total',
+    fases:{primerContacto:'19:38h',parcialAvanzado:'~20:21h',perlasBaily:'~20:32h',anilloDiamante:'~20:32:25h',totalidadInicio:'20:32:30h',totalidadFin:'20:33:30h',ultimoContacto:'~21:32h'},duracion:'1 min 00s'},
+  'palma':{nombre:'Palma de Mallorca',tipo:'total',
+    fases:{primerContacto:'19:38h',parcialAvanzado:'~20:20h',perlasBaily:'~20:31h',anilloDiamante:'~20:31:00h',totalidadInicio:'20:31:05h',totalidadFin:'20:32:41h',ultimoContacto:'~21:31h'},duracion:'1 min 36s'},
+  'barcelona':{nombre:'Barcelona',tipo:'parcial',cobertura:'99.8%',
+    fases:{primerContacto:'19:35h',parcialAvanzado:'~20:15h',maxOcultacion:'20:29h',ultimoContacto:'~21:30h'}},
+  'madrid':{nombre:'Madrid',tipo:'parcial',cobertura:'99.0%',
+    fases:{primerContacto:'19:35h',parcialAvanzado:'~20:16h',maxOcultacion:'20:32h',ultimoContacto:'~21:32h'}},
+  'sevilla':{nombre:'Sevilla',tipo:'parcial',cobertura:'82.0%',
+    fases:{primerContacto:'19:38h',parcialAvanzado:'~20:18h',maxOcultacion:'20:33h',ultimoContacto:'~21:33h'}},
+  'malaga':{nombre:'Málaga',tipo:'parcial',cobertura:'78.0%',
+    fases:{primerContacto:'19:40h',parcialAvanzado:'~20:19h',maxOcultacion:'20:34h',ultimoContacto:'~21:34h'}},
+};
+
+/* ── UPDATE TIMELINE ─────────────────────────────── */
+function updateTimeline(key){
+  const c=ciudadesData[key];
+  if(!c) return;
+  const isTotal=(c.tipo==='total');
+  const nombre=c.nombre;
+
+  // update city label
+  document.getElementById('tl-ciudad-name').textContent=nombre;
+  document.getElementById('tl-city-select').value=key;
+
+  if(isTotal){
+    const f=c.fases;
+    document.getElementById('tl-t1').textContent=f.primerContacto;
+    document.getElementById('tl-t2').textContent=f.parcialAvanzado;
+    document.getElementById('tl-t3').textContent=f.perlasBaily;
+    document.getElementById('tl-t4').textContent=f.anilloDiamante;
+    document.getElementById('tl-t5').textContent='★ '+f.totalidadInicio+' — '+f.totalidadFin+' ★';
+    document.getElementById('tl-dur-text').textContent='ÚNICO MOMENTO SIN GAFAS · '+c.duracion;
+    document.getElementById('tl-t6').textContent=f.totalidadFin;
+    document.getElementById('tl-t7').textContent=f.ultimoContacto;
+    // show all items normally
+    ['tli-3','tli-4','tli-5','tli-6'].forEach(id=>document.getElementById(id).classList.remove('tl-na'));
+  } else {
+    const f=c.fases;
+    document.getElementById('tl-t1').textContent=f.primerContacto;
+    document.getElementById('tl-t2').textContent=f.parcialAvanzado;
+    document.getElementById('tl-t3').textContent='No visible desde '+nombre;
+    document.getElementById('tl-t4').textContent='No visible desde '+nombre;
+    document.getElementById('tl-t5').textContent='ECLIPSE PARCIAL — '+c.cobertura+' — Máx. '+f.maxOcultacion;
+    document.getElementById('tl-dur-text').textContent='Eclipse parcial — usar gafas siempre';
+    document.getElementById('tl-t6').textContent='No visible desde '+nombre;
+    document.getElementById('tl-t7').textContent=f.ultimoContacto;
+    // dim total-only items
+    ['tli-3','tli-4','tli-6'].forEach(id=>document.getElementById(id).classList.add('tl-na'));
+    document.getElementById('tli-5').classList.remove('tl-na');
+  }
+}
+
+// city dropdown change
+document.getElementById('tl-city-select').addEventListener('change',function(){
+  updateTimeline(this.value);
+});
+
+// default: Borobia
+updateTimeline('borobia');
+
+/* ── LEAFLET MAP ─────────────────────────────────── */
+(function initMap(){
+  const mapEl=document.getElementById('leaflet-map');
+  if(!mapEl||typeof L==='undefined') return;
+
+  const map=L.map('leaflet-map',{center:[41.0,-2.5],zoom:6,scrollWheelZoom:false});
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains:'abcd',maxZoom:19
+  }).addTo(map);
+
+  /* Totality polygon — corrected coordinates (lat, lng) */
+  const northLimit=[
+    [44.5,-10.5],[44.2,-9.8],[43.9,-9.0],[43.7,-8.2],
+    [43.5,-7.2],[43.7,-6.2],[43.65,-5.2],[43.5,-4.2],
+    [43.6,-3.2],[43.4,-2.2],[42.7,-1.2],[42.4,-0.2],
+    [42.1,0.8],[41.7,1.8],[41.2,2.8],[40.7,3.8],[40.2,4.8]
+  ];
+  const southLimit=[
+    [43.0,-10.0],[42.6,-9.0],[42.3,-8.0],[42.0,-7.0],
+    [41.7,-6.0],[41.45,-5.0],[41.2,-4.0],[40.9,-3.0],
+    [40.2,-2.0],[39.5,-1.0],[39.2,0.0],[39.5,1.0],
+    [39.1,2.0],[38.6,3.0],[38.1,4.0],[37.5,5.0]
+  ];
+  L.polygon([...northLimit,...[...southLimit].reverse()],{
+    color:'#D4AF37',weight:2,dashArray:'6,4',fillColor:'#D4AF37',fillOpacity:0.12
+  }).addTo(map);
+
+  /* Central line */
+  const centralLine=[
+    [43.8,-10.2],[43.4,-9.4],[43.0,-8.6],[42.75,-7.8],
+    [42.55,-7.0],[42.35,-6.0],[42.15,-5.0],[41.95,-4.0],
+    [41.75,-3.2],[41.55,-2.4],[41.35,-1.6],[41.1,-0.8],
+    [40.85,0.0],[40.55,0.8],[40.2,1.6],[39.85,2.4],
+    [39.45,3.2],[39.0,4.0],[38.5,4.8]
+  ];
+  L.polyline(centralLine,{color:'#D4AF37',weight:2,dashArray:'5,5',opacity:.75}).addTo(map);
+
+  /* popup helper */
+  function makePopup(name,lines){
+    return`<div class="popup-city">${name}</div><div class="popup-info">${lines.join('<br>')}</div>`;
+  }
+
+  /* function to connect marker click to timeline */
+  function onMarkerClick(cityKey){
+    updateTimeline(cityKey);
+    setTimeout(()=>document.getElementById('timeline').scrollIntoView({behavior:'smooth'}),300);
+  }
+
+  /* Total cities — gold markers */
+  const totalCities=[
+    {key:'a-coruna', name:'A Coruña',         lat:43.37,lng:-8.40},
+    {key:'oviedo',   name:'Oviedo',            lat:43.36,lng:-5.84},
+    {key:'gijon',    name:'Gijón',             lat:43.54,lng:-5.66},
+    {key:'santander',name:'Santander',         lat:43.46,lng:-3.80},
+    {key:'bilbao',   name:'Bilbao',            lat:43.26,lng:-2.93},
+    {key:'vitoria',  name:'Vitoria-Gasteiz',   lat:42.85,lng:-2.67},
+    {key:'burgos',   name:'Burgos',            lat:42.34,lng:-3.71},
+    {key:'valladolid',name:'Valladolid',       lat:41.65,lng:-4.72},
+    {key:'zaragoza', name:'Zaragoza',          lat:41.65,lng:-0.89},
+    {key:'castellon',name:'Castellón',         lat:39.99,lng:-0.05},
+    {key:'valencia', name:'València',          lat:39.47,lng:-0.38},
+    {key:'palma',    name:'Palma de Mallorca', lat:39.57,lng:2.65},
+  ];
+  totalCities.forEach(c=>{
+    const cd=ciudadesData[c.key];
+    const icon=L.divIcon({html:'<div class="city-marker-gold"></div>',className:'',iconSize:[10,10],iconAnchor:[5,5]});
+    const marker=L.marker([c.lat,c.lng],{icon})
+      .bindPopup(makePopup(c.name,[
+        `<span style="color:#D4AF37;font-size:.7em">Eclipse total</span>`,
+        `Inicio: ${cd.fases.primerContacto}`,
+        `Totalidad: ${cd.fases.totalidadInicio} – ${cd.fases.totalidadFin}`,
+        `Duración: <strong style="color:#D4AF37">${cd.duracion}</strong>`
+      ]),{className:'eclypse-popup',maxWidth:220})
+      .addTo(map);
+    marker.on('popupopen',()=>onMarkerClick(c.key));
+  });
+
+  /* Partial cities — purple markers */
+  const partialCities=[
+    {key:'barcelona',name:'Barcelona',lat:41.38,lng:2.17},
+    {key:'madrid',   name:'Madrid',   lat:40.42,lng:-3.70},
+    {key:'sevilla',  name:'Sevilla',  lat:37.39,lng:-5.99},
+    {key:'malaga',   name:'Málaga',   lat:36.72,lng:-4.42},
+  ];
+  partialCities.forEach(c=>{
+    const cd=ciudadesData[c.key];
+    const icon=L.divIcon({html:'<div class="city-marker-purple"></div>',className:'',iconSize:[10,10],iconAnchor:[5,5]});
+    const marker=L.marker([c.lat,c.lng],{icon})
+      .bindPopup(makePopup(c.name,[
+        `<span style="color:#a5b4fc;font-size:.7em">Eclipse parcial — ${cd.cobertura}</span>`,
+        `Inicio: ${cd.fases.primerContacto}`,
+        `Máx. ocultación: ${cd.fases.maxOcultacion}`,
+        `Requiere gafas en todo momento`
+      ]),{className:'eclypse-popup',maxWidth:220})
+      .addTo(map);
+    marker.on('popupopen',()=>onMarkerClick(c.key));
+  });
+
+  /* Borobia — pulsing marker (max duration) */
+  const borobiaIcon=L.divIcon({html:'<div class="borobia-marker"></div>',className:'',iconSize:[16,16],iconAnchor:[8,8]});
+  const borobiaMarker=L.marker([41.50,-1.89],{icon:borobiaIcon})
+    .bindPopup(makePopup('Borobia ★ Punto Óptimo',[
+      `<span style="color:#D4AF37;font-size:.7em">Máxima duración de España</span>`,
+      'Inicio parcial: ~19:30h',
+      'Totalidad: ~20:28h – ~20:31h',
+      `Duración: <strong style="color:#D4AF37">2 min 57s</strong>`
+    ]),{className:'eclypse-popup',maxWidth:240})
+    .addTo(map);
+  borobiaMarker.on('popupopen',()=>onMarkerClick('borobia'));
+
+  /* Legend */
+  const legend=L.control({position:'bottomleft'});
+  legend.onAdd=function(){
+    const d=L.DomUtil.create('div');
+    d.style.cssText='background:rgba(10,22,40,.88);padding:10px 14px;border-radius:10px;border:1px solid rgba(212,175,55,.25);font-family:Work Sans,sans-serif;font-size:.75rem;color:#E2E8F0;line-height:2;';
+    d.innerHTML=
+      '<div style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#D4AF37;display:inline-block;flex-shrink:0"></span>Totalidad (100%)</div>'+
+      '<div style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#6366F1;display:inline-block;flex-shrink:0"></span>Eclipse parcial</div>'+
+      '<div style="display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:50%;background:#D4AF37;display:inline-block;flex-shrink:0;border:2px solid #fff"></span>Borobia (máx. 2m 57s)</div>';
+    return d;
+  };
+  legend.addTo(map);
+})();
 </script>
 </body>
 </html>
