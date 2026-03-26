@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eclypse — Gafas de Eclipse Solar | 12 Agosto 2026</title>
+  <meta name="description" content="Gafas de eclipse solar certificadas ISO 12312-2 y marcado CE para el eclipse total del 12 de agosto de 2026 en España. Tu retina no tiene segunda oportunidad.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+
+  <style>
+  /* ═══════════════════════════════════════
+     TOKENS
+  ═══════════════════════════════════════ */
+  :root {
+    --navy:   #0A1628;
+    --blue:   #1E3A8A;
+    --gold:   #D4AF37;
+    --purple: #6366F1;
+    --dark:   #0F172A;
+    --light:  #F8FAFC;
+    --tl:     #E2E8F0;
+    --td:     #1E293B;
+    --gold-dim: rgba(212,175,55,.18);
+    --purple-dim: rgba(99,102,241,.18);
+  }
+
+  /* ═══════════════════════════════════════
+     RESET & BASE
+  ═══════════════════════════════════════ */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Work Sans',sans-serif; background:var(--dark); color:var(--tl); overflow-x:hidden; }
+
+  /* ═══════════════════════════════════════
+     TYPOGRAPHY HELPERS
+  ═══════════════════════════════════════ */
+  .orb { font-family:'Orbitron',sans-serif; }
+  .eyebrow {
+    font-family:'Orbitron',sans-serif; font-size:.68rem;
+    letter-spacing:4px; text-transform:uppercase; color:var(--gold);
+    display:block; margin-bottom:16px;
+  }
+  .section-title {
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(1.7rem,3.2vw,2.8rem);
+    font-weight:700; color:var(--tl); line-height:1.2; margin-bottom:16px;
+  }
+  .section-title--dark { color:var(--td); }
+  .section-body {
+    font-size:1.05rem; font-weight:300; line-height:1.85; opacity:.8;
+  }
+
+  /* ═══════════════════════════════════════
+     LOGO
+  ═══════════════════════════════════════ */
+  .logo { display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo-text { font-family:'Orbitron',sans-serif; font-weight:700; letter-spacing:2px; font-size:1.35rem; }
+  .logo--dark  .logo-text { background:linear-gradient(135deg,#E2E8F0,var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .logo--light .logo-text { background:linear-gradient(135deg,var(--navy),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+  /* ═══════════════════════════════════════
+     SECTION 1 — HERO SPLIT
+  ═══════════════════════════════════════ */
+  #scroll-zone { height:300vh; }
+
+  #hero-sticky {
+    position:sticky; top:0; height:100vh;
+    display:flex; overflow:hidden;
+  }
+
+  /* centre hairline */
+  #hero-sticky::after {
+    content:''; position:absolute; left:50%; top:0; bottom:0;
+    width:1px; transform:translateX(-50%); z-index:20; pointer-events:none;
+    background:linear-gradient(to bottom,transparent,rgba(212,175,55,.5) 30%,rgba(212,175,55,.5) 70%,transparent);
+  }
+
+  .half {
+    flex:1; position:relative; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:0 24px 72px; overflow:hidden;
+    transition:filter .35s ease;
+  }
+  .half:hover { filter:brightness(1.05); }
+  .half--light { background:var(--light); }
+  .half--dark  { background:var(--dark); }
+  .half::before {
+    content:''; position:absolute; inset:0; opacity:0;
+    transition:opacity .4s; pointer-events:none;
+  }
+  .half--light::before { background:radial-gradient(ellipse at 50% 60%,rgba(212,175,55,.1),transparent 65%); }
+  .half--dark::before  { background:radial-gradient(ellipse at 50% 60%,rgba(99,102,241,.12),transparent 65%); }
+  .half:hover::before  { opacity:1; }
+
+  /* eclipse date badge top */
+  .half-date {
+    position:absolute; top:18px; left:50%; transform:translateX(-50%);
+    font-family:'Orbitron',sans-serif; font-size:.58rem; letter-spacing:3px;
+    white-space:nowrap; z-index:5;
+  }
+  .half--light .half-date { color:var(--navy); opacity:.45; }
+  .half--dark  .half-date { color:var(--tl);   opacity:.45; }
+
+  /* logo */
+  .half-logo {
+    position:absolute; top:34px; left:50%; transform:translateX(-50%);
+    z-index:5; white-space:nowrap;
+  }
+
+  /* glasses image */
+  .glasses-wrap {
+    position:relative; width:min(380px,88%); z-index:2;
+    will-change:transform,opacity;
+    filter:drop-shadow(0 16px 40px rgba(0,0,0,.22));
+  }
+  .half--light .glasses-wrap { filter:drop-shadow(0 20px 50px rgba(212,175,55,.35)); }
+  .half--dark  .glasses-wrap { filter:drop-shadow(0 20px 50px rgba(99,102,241,.38)); }
+
+  .glasses-wrap img {
+    width:100%; display:block;
+    /* fallback bg if image missing */
+    background:linear-gradient(135deg,rgba(212,175,55,.08),rgba(99,102,241,.08));
+    border-radius:8px; min-height:80px;
+  }
+
+  /* model name + cert */
+  .model-name {
+    font-family:'Orbitron',sans-serif; font-weight:700;
+    font-size:clamp(1.1rem,2.2vw,1.7rem); letter-spacing:3px; margin-top:22px;
+    text-align:center;
+  }
+  .half--light .model-name { color:var(--navy); }
+  .half--dark  .model-name { color:var(--tl); }
+
+  .model-sub  { font-size:.8rem; letter-spacing:2px; text-align:center; margin-top:4px; opacity:.55; }
+  .half--light .model-sub { color:var(--navy); }
+  .half--dark  .model-sub { color:var(--tl); }
+
+  .model-cert {
+    font-family:'Orbitron',sans-serif; font-size:.55rem;
+    letter-spacing:2px; text-align:center; margin-top:8px;
+    color:var(--gold); opacity:.75;
+  }
+
+  /* countdown bar */
+  .cd-bar {
+    position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+    z-index:20; display:flex; align-items:center; gap:18px;
+    background:rgba(10,22,40,.6); backdrop-filter:blur(14px);
+    border:1px solid rgba(212,175,55,.18); border-radius:100px;
+    padding:10px 26px; white-space:nowrap;
+  }
+  .cd-label { font-family:'Orbitron',sans-serif; font-size:.55rem; letter-spacing:2px; color:var(--gold); opacity:.65; }
+  .cd-units { display:flex; gap:14px; }
+  .cd-unit  { display:flex; flex-direction:column; align-items:center; }
+  .cd-num   { font-family:'Orbitron',sans-serif; font-size:.95rem; font-weight:700; color:var(--tl); line-height:1; }
+  .cd-tag   { font-size:.5rem; color:var(--gold); letter-spacing:1px; text-transform:uppercase; opacity:.6; margin-top:2px; }
+  .cd-sep   { font-family:'Orbitron',sans-serif; font-size:.9rem; color:var(--gold); opacity:.4; align-self:center; }
+
+  /* scroll hint */
+  .scroll-hint {
+    position:absolute; bottom:74px; left:50%; transform:translateX(-50%);
+    z-index:20; display:flex; flex-direction:column; align-items:center; gap:5px;
+    opacity:.4; transition:opacity .4s; pointer-events:none;
+  }
+  .scroll-hint.gone { opacity:0; }
+  .scroll-hint span { font-family:'Orbitron',sans-serif; font-size:.55rem; letter-spacing:3px; color:var(--gold); }
+  .scroll-arrow {
+    width:14px; height:14px;
+    border-right:2px solid var(--gold); border-bottom:2px solid var(--gold);
+    transform:rotate(45deg);
+    animation:ab 1.7s ease-in-out infinite;
+  }
+  @keyframes ab { 0%,100%{transform:rotate(45deg) translate(0,0)} 50%{transform:rotate(45deg) translate(3px,3px)} }
+
+  /* particles */
+  .particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .p { position:absolute; border-radius:50%; opacity:0; transition:opacity .5s; }
+  .p-star { background:#fff; box-shadow:0 0 4px 1px rgba(255,255,255,.4); }
+  .p-ray  { background:var(--gold); box-shadow:0 0 5px 2px rgba(212,175,55,.45); }
+  @keyframes twk { 0%,100%{transform:scale(1)} 50%{transform:scale(2)} }
+
+  /* ═══════════════════════════════════════
+     SECTION 2 — TRANSITION / HEADLINE
+  ═══════════════════════════════════════ */
+  #transition {
+    position:relative; height:100vh; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,var(--light) 0%,#e8c84a 28%,var(--gold) 46%,var(--purple) 68%,var(--dark) 100%);
+  }
+  .t-panel { position:absolute; top:0; bottom:0; width:50%; z-index:2; transition:transform .95s cubic-bezier(.77,0,.175,1); }
+  .t-left  { left:0;  background:var(--light); transform-origin:right center; }
+  .t-right { right:0; background:var(--dark);  transform-origin:left center; }
+  .t-left.open  { transform:scaleX(0); }
+  .t-right.open { transform:scaleX(0); }
+
+  .t-content {
+    position:relative; z-index:10; text-align:center; padding:40px 20px;
+    max-width:680px;
+    opacity:0; transform:translateY(28px);
+    transition:opacity .7s ease .5s, transform .7s ease .5s;
+  }
+  .t-content.show { opacity:1; transform:translateY(0); }
+
+  .t-headline {
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(2rem,5.5vw,4.2rem); font-weight:700;
+    color:#fff; text-shadow:0 2px 40px rgba(0,0,0,.35);
+    line-height:1.1; margin-bottom:20px;
+  }
+  .t-sub { font-size:clamp(.9rem,1.6vw,1.1rem); color:rgba(255,255,255,.88); font-weight:300; line-height:1.8; max-width:560px; margin:0 auto 36px; }
+  .t-stat {
+    display:inline-block;
+    background:rgba(0,0,0,.3); backdrop-filter:blur(10px);
+    border:1px solid rgba(212,175,55,.35); border-radius:12px;
+    padding:18px 28px; margin-top:4px;
+  }
+  .t-stat-num { font-family:'Orbitron',sans-serif; font-size:2.8rem; font-weight:900; color:var(--gold); line-height:1; }
+  .t-stat-label { font-size:.82rem; color:rgba(255,255,255,.8); margin-top:6px; line-height:1.5; }
+
+  /* ═══════════════════════════════════════
+     SECTION 3 — ¿POR QUÉ CERTIFICADAS?
+  ═══════════════════════════════════════ */
+  #why {
+    background:var(--dark); padding:120px 5%;
+  }
+  #why .section-title { text-align:center; max-width:700px; margin:0 auto 70px; }
+
+  .why-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:28px; max-width:1100px; margin:0 auto;
+  }
+  .why-card {
+    background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+    border-radius:20px; padding:36px 28px;
+    opacity:0; transform:translateY(36px);
+    transition:opacity .55s ease, transform .55s ease, border-color .3s, box-shadow .3s;
+  }
+  .why-card.show { opacity:1; transform:translateY(0); }
+  .why-card:hover {
+    border-color:rgba(212,175,55,.35);
+    box-shadow:0 24px 48px rgba(212,175,55,.08);
+    transform:translateY(-4px);
+  }
+  .why-icon {
+    width:52px; height:52px; margin-bottom:22px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--gold-dim); border-radius:14px;
+  }
+  .why-icon svg { width:26px; height:26px; }
+  .why-card h3 { font-family:'Orbitron',sans-serif; font-size:.9rem; font-weight:600; color:var(--gold); margin-bottom:12px; letter-spacing:.5px; }
+  .why-card p  { font-size:.92rem; color:var(--tl); opacity:.72; line-height:1.75; font-weight:300; }
+
+  /* ═══════════════════════════════════════
+     SECTION 4 — DATOS CURIOSOS
+  ═══════════════════════════════════════ */
+  #facts {
+    padding:120px 5%;
+    background:linear-gradient(160deg, #0D1B35 0%, var(--dark) 60%, #0A1628 100%);
+  }
+  #facts .section-title { text-align:center; margin-bottom:64px; }
+
+  .facts-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:22px; max-width:1100px; margin:0 auto;
+  }
+  .fact-card {
+    background:rgba(255,255,255,.035);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(212,175,55,.14);
+    border-radius:20px; padding:32px 28px;
+    opacity:0; transform:translateY(32px);
+    transition:opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s;
+  }
+  .fact-card.show { opacity:1; transform:translateY(0); }
+  .fact-card:hover {
+    border-color:rgba(212,175,55,.4);
+    box-shadow:0 20px 50px rgba(212,175,55,.09);
+    transform:translateY(-5px);
+  }
+  .fact-num {
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; color:var(--gold);
+    line-height:1; margin-bottom:10px;
+  }
+  .fact-label { font-size:.78rem; font-weight:600; color:var(--tl); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; opacity:.8; }
+  .fact-desc  { font-size:.88rem; color:var(--tl); opacity:.6; line-height:1.7; font-weight:300; }
+
+  /* ═══════════════════════════════════════
+     SECTION 5 — MAPA DE ESPAÑA
+  ═══════════════════════════════════════ */
+  #map {
+    background:var(--light); padding:120px 5%;
+    text-align:center;
+  }
+  #map .eyebrow { color:var(--blue); }
+  #map .section-title { color:var(--td); }
+  #map .section-body  { color:var(--td); max-width:640px; margin:0 auto 56px; }
+
+  .map-container {
+    position:relative; max-width:780px; margin:0 auto 36px;
+    border-radius:24px; overflow:hidden;
+    background:rgba(30,58,138,.05);
+    border:1px solid rgba(30,58,138,.12);
+    padding:24px;
+  }
+
+  #spain-map { width:100%; height:auto; display:block; }
+
+  /* city tooltip */
+  .map-tooltip {
+    position:absolute; pointer-events:none; z-index:30;
+    background:rgba(10,22,40,.92); backdrop-filter:blur(8px);
+    border:1px solid rgba(212,175,55,.35); border-radius:10px;
+    padding:10px 14px; transform:translate(-50%,-110%);
+    opacity:0; transition:opacity .2s; white-space:nowrap;
+  }
+  .map-tooltip.show { opacity:1; }
+  .map-tooltip strong { font-family:'Orbitron',sans-serif; font-size:.7rem; color:var(--gold); display:block; margin-bottom:3px; }
+  .map-tooltip span   { font-size:.72rem; color:var(--tl); opacity:.8; }
+
+  .map-legend {
+    display:flex; justify-content:center; gap:28px; flex-wrap:wrap; margin-top:8px;
+  }
+  .legend-item { display:flex; align-items:center; gap:8px; font-size:.8rem; color:var(--td); opacity:.75; }
+  .legend-dot  { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+  .ld-gold   { background:var(--gold); }
+  .ld-purple { background:var(--purple); }
+
+  .map-note {
+    max-width:640px; margin:36px auto 0;
+    font-size:.92rem; color:var(--td); opacity:.7; line-height:1.8; font-weight:300;
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION 6 — TIMELINE
+  ═══════════════════════════════════════ */
+  #timeline {
+    background:var(--dark); padding:120px 5%;
+  }
+  #timeline .section-title { text-align:center; margin-bottom:16px; }
+  .timeline-sub { text-align:center; font-size:.88rem; color:var(--tl); opacity:.5; margin-bottom:64px; font-style:italic; }
+
+  .tl-track {
+    position:relative; max-width:900px; margin:0 auto;
+    padding-left:28px;
+  }
+  .tl-track::before {
+    content:''; position:absolute; left:0; top:12px; bottom:12px;
+    width:2px;
+    background:linear-gradient(to bottom,transparent,var(--gold) 10%,rgba(212,175,55,.4) 80%,transparent);
+  }
+
+  .tl-item {
+    position:relative; padding:0 0 48px 36px;
+    opacity:0; transform:translateX(-18px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .tl-item.show { opacity:1; transform:translateX(0); }
+  .tl-item:last-child { padding-bottom:0; }
+
+  .tl-dot {
+    position:absolute; left:-7px; top:10px;
+    width:16px; height:16px; border-radius:50%;
+    background:var(--dark); border:2px solid var(--gold);
+    z-index:2;
+  }
+  .tl-dot.total { background:var(--gold); box-shadow:0 0 14px rgba(212,175,55,.6); }
+
+  .tl-time  { font-family:'Orbitron',sans-serif; font-size:.72rem; color:var(--gold); letter-spacing:2px; margin-bottom:6px; }
+  .tl-phase { font-family:'Orbitron',sans-serif; font-size:1rem; font-weight:600; color:var(--tl); margin-bottom:8px; }
+  .tl-desc  { font-size:.9rem; color:var(--tl); opacity:.65; line-height:1.7; font-weight:300; max-width:620px; }
+  .tl-warn  {
+    display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+    font-family:'Orbitron',sans-serif; font-size:.6rem; letter-spacing:1.5px;
+    padding:5px 12px; border-radius:100px;
+  }
+  .tl-warn.on  { background:rgba(212,175,55,.12); border:1px solid rgba(212,175,55,.35); color:var(--gold); }
+  .tl-warn.off { background:rgba(99,102,241,.12);  border:1px solid rgba(99,102,241,.35);  color:#a5b4fc; }
+  .tl-warn svg { width:12px; height:12px; }
+
+  /* ═══════════════════════════════════════
+     SECTION 7 — PACKS
+  ═══════════════════════════════════════ */
+  #packs { background:linear-gradient(180deg,var(--dark) 0%,#0D1F3C 100%); padding:120px 5%; }
+  #packs .section-title { text-align:center; }
+  #packs .eyebrow { text-align:center; display:block; }
+  .packs-sub { text-align:center; font-size:.95rem; color:var(--tl); opacity:.6; font-weight:300; margin-bottom:40px; }
+
+  .model-toggle { display:flex; justify-content:center; gap:14px; margin:28px 0 50px; }
+  .mtbtn {
+    padding:10px 28px; border-radius:100px;
+    font-family:'Orbitron',sans-serif; font-size:.7rem; font-weight:500;
+    letter-spacing:1px; cursor:pointer; border:2px solid transparent;
+    transition:all .3s; background:transparent;
+  }
+  .mtbtn-gold   { border-color:var(--gold);   color:var(--gold); }
+  .mtbtn-gold.on, .mtbtn-gold:hover   { background:var(--gold);   color:var(--dark); }
+  .mtbtn-purple { border-color:var(--purple); color:var(--purple); }
+  .mtbtn-purple.on, .mtbtn-purple:hover { background:var(--purple); color:#fff; }
+
+  .packs-row {
+    display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+    max-width:1150px; margin:0 auto;
+  }
+
+  .pack {
+    flex:1; min-width:175px; max-width:215px;
+    background:rgba(255,255,255,.03); border-radius:22px; padding:32px 20px;
+    text-align:center; border:1.5px solid rgba(255,255,255,.07);
+    transition:all .45s cubic-bezier(.34,1.56,.64,1);
+    opacity:0; transform:translateY(34px); position:relative; overflow:hidden;
+  }
+  .pack.show { opacity:1; transform:translateY(0); }
+  .pack:hover { transform:translateY(-9px) scale(1.025); }
+  .pack::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    opacity:0; transition:opacity .3s;
+  }
+  .pack:hover::before { opacity:1; }
+
+  /* gold theme */
+  .packs-row.model-gold .pack { border-color:rgba(212,175,55,.18); }
+  .packs-row.model-gold .pack:hover { border-color:rgba(212,175,55,.55); box-shadow:0 28px 60px rgba(212,175,55,.12); }
+  .packs-row.model-gold .pack::before { background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+  .packs-row.model-gold .pack-btn { background:linear-gradient(135deg,var(--gold),#b8973a); color:var(--dark); }
+  .packs-row.model-gold .pack-btn:hover { box-shadow:0 8px 28px rgba(212,175,55,.42); }
+  .packs-row.model-gold .pack-savings { color:var(--gold); }
+
+  /* purple theme */
+  .packs-row.model-purple .pack { border-color:rgba(99,102,241,.18); }
+  .packs-row.model-purple .pack:hover { border-color:rgba(99,102,241,.55); box-shadow:0 28px 60px rgba(99,102,241,.12); }
+  .packs-row.model-purple .pack::before { background:linear-gradient(90deg,transparent,var(--purple),transparent); }
+  .packs-row.model-purple .pack-btn { background:linear-gradient(135deg,var(--purple),#4f46e5); color:#fff; }
+  .packs-row.model-purple .pack-btn:hover { box-shadow:0 8px 28px rgba(99,102,241,.42); }
+  .packs-row.model-purple .pack-savings { color:#a5b4fc; }
+
+  .pack-qty   { font-family:'Orbitron',sans-serif; font-size:2.6rem; font-weight:900; color:var(--tl); line-height:1; margin-bottom:2px; }
+  .pack-desc  { font-size:.7rem; text-transform:uppercase; letter-spacing:1.8px; color:var(--tl); opacity:.4; margin-bottom:18px; }
+  .pack-price { font-family:'Orbitron',sans-serif; font-size:1.85rem; font-weight:700; color:var(--gold); line-height:1; }
+  .pack-upr   { font-size:.73rem; color:var(--tl); opacity:.4; margin:5px 0 6px; }
+  .pack-savings { font-family:'Orbitron',sans-serif; font-size:.58rem; font-weight:600; letter-spacing:1px; margin-bottom:22px; min-height:14px; }
+  .pack-btn {
+    display:block; width:100%; padding:12px; border:none; border-radius:100px;
+    font-family:'Orbitron',sans-serif; font-size:.62rem; font-weight:600;
+    letter-spacing:1.2px; text-transform:uppercase; cursor:pointer;
+    transition:all .3s ease;
+  }
+  .pack-btn:hover { transform:translateY(-1px); }
+
+  .packs-guarantees {
+    text-align:center; margin-top:48px;
+    font-size:.85rem; color:var(--tl); opacity:.5; line-height:2;
+  }
+  .packs-guarantees span { margin:0 10px; }
+
+  /* ═══════════════════════════════════════
+     SECTION 8 — FOOTER
+  ═══════════════════════════════════════ */
+  footer {
+    background:var(--navy); padding:56px 40px 40px;
+    text-align:center; border-top:1px solid rgba(212,175,55,.1);
+  }
+  .foot-certline { font-size:.72rem; color:var(--tl); opacity:.35; letter-spacing:1.5px; margin-top:6px; margin-bottom:22px; }
+  .foot-copy { font-size:.82rem; color:var(--tl); opacity:.4; margin-bottom:22px; }
+  .foot-email { font-size:.82rem; color:var(--gold); opacity:.7; margin-bottom:22px; text-decoration:none; display:block; }
+  .foot-email:hover { opacity:1; }
+  .foot-links { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-bottom:28px; }
+  .foot-links a { font-size:.78rem; color:var(--tl); opacity:.4; text-decoration:none; transition:opacity .2s; }
+  .foot-links a:hover { opacity:1; color:var(--gold); }
+  .socials { display:flex; gap:14px; justify-content:center; }
+  .soc {
+    width:40px; height:40px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.12); display:flex; align-items:center;
+    justify-content:center; color:var(--tl); opacity:.45;
+    text-decoration:none; transition:all .3s;
+  }
+  .soc:hover { border-color:var(--gold); opacity:1; transform:translateY(-2px); box-shadow:0 6px 20px rgba(212,175,55,.2); }
+
+  /* ═══════════════════════════════════════
+     FADE-IN UTILITY
+  ═══════════════════════════════════════ */
+  .fade-in { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .fade-in.show { opacity:1; transform:translateY(0); }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════ */
+  @media(max-width:768px) {
+    #hero-sticky { flex-direction:column; }
+    #hero-sticky::after { left:0; right:0; top:50%; bottom:auto; width:auto; height:1px; transform:none; }
+    .half { height:50vh; flex:none; padding:0 16px 48px; }
+    .half-logo { top:14px; }
+    .glasses-wrap { width:min(240px,82%); }
+    .model-name { font-size:1rem; }
+    .cd-bar { padding:8px 16px; gap:10px; }
+    .cd-num { font-size:.8rem; }
+    .cd-label { display:none; }
+    .packs-row { flex-direction:column; align-items:center; }
+    .pack { max-width:320px; width:100%; }
+    #why, #facts, #map, #timeline, #packs { padding:80px 5%; }
+    .t-headline { font-size:clamp(1.8rem,6vw,3rem); }
+    .why-grid { grid-template-columns:1fr; }
+    .facts-grid { grid-template-columns:1fr; }
+    .tl-track { padding-left:22px; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     §1 HERO — SPLIT SCREEN
+════════════════════════════════════════════════════ -->
+<div id="scroll-zone">
+  <div id="hero-sticky" role="banner">
+
+    <!-- LEFT: Solar Light -->
+    <div class="half half--light" id="half-light">
+      <span class="half-date" aria-hidden="true">12 · AGOSTO · 2026</span>
+
+      <div class="half-logo">
+        <a href="#" class="logo logo--light" aria-label="eclypse inicio">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <defs>
+              <radialGradient id="cl-cor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1E3A8A" stop-opacity="0"/><stop offset="58%" stop-color="#1E3A8A" stop-opacity=".15"/><stop offset="100%" stop-color="#1E3A8A" stop-opacity="0"/></radialGradient>
+              <filter id="cl-bl"><feGaussianBlur stdDeviation="2.5"/></filter>
+              <radialGradient id="cl-co" cx="35%" cy="35%" r="70%"><stop offset="0%" stop-color="#000" stop-opacity=".8"/><stop offset="100%" stop-color="#0A1628" stop-opacity="0"/></radialGradient>
+            </defs>
+            <circle cx="20" cy="20" r="19" fill="url(#cl-cor)" filter="url(#cl-bl)"/>
+            <circle cx="20" cy="20" r="16" fill="none" stroke="#1E3A8A" stroke-width="2" opacity=".6"><animate attributeName="r" values="16;17;16" dur="3s" repeatCount="indefinite"/></circle>
+            <circle cx="20" cy="20" r="11" fill="none" stroke="#6366F1" stroke-width="1.5" opacity=".8"/>
+            <circle cx="20" cy="20" r="7"  fill="#0A1628"/>
+            <circle cx="20" cy="20" r="7"  fill="url(#cl-co)"/>
+          </svg>
+          <span class="logo-text">eclypse</span>
+        </a>
+      </div>
+
+      <figure class="glasses-wrap" id="gl-light" aria-label="Gafas Solar Light">
+        <img src="solar-light.png" alt="Gafas de eclipse solar modelo Solar Light, montura dorada, lentes semitransparentes">
+      </figure>
+
+      <p class="model-name">SOLAR LIGHT</p>
+      <p class="model-sub">Pureza y Claridad</p>
+      <p class="model-cert">Protección ISO 12312-2 · CE</p>
+
+      <div class="particles" id="pt-light" aria-hidden="true"></div>
+    </div>
+
+    <!-- RIGHT: Eclipse Dark -->
+    <div class="half half--dark" id="half-dark">
+      <span class="half-date" aria-hidden="true">12 · AGOSTO · 2026</span>
+
+      <div class="half-logo">
+        <a href="#" class="logo logo--dark" aria-label="eclypse inicio">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <defs>
+              <radialGradient id="cd-cor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#D4AF37" stop-opacity="0"/><stop offset="58%" stop-color="#D4AF37" stop-opacity=".16"/><stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/></radialGradient>
+              <filter id="cd-bl"><feGaussianBlur stdDeviation="2.8"/></filter>
+              <radialGradient id="cd-co" cx="35%" cy="35%" r="70%"><stop offset="0%" stop-color="#000" stop-opacity=".85"/><stop offset="100%" stop-color="#0A1628" stop-opacity="0"/></radialGradient>
+            </defs>
+            <circle cx="20" cy="20" r="19" fill="url(#cd-cor)" filter="url(#cd-bl)"/>
+            <circle cx="20" cy="20" r="16" fill="none" stroke="#D4AF37" stroke-width="1.8" opacity=".55"><animate attributeName="r" values="16;17.5;16" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".55;.9;.55" dur="3s" repeatCount="indefinite"/></circle>
+            <circle cx="20" cy="20" r="11" fill="none" stroke="#6366F1" stroke-width="1.5" opacity=".85"/>
+            <circle cx="20" cy="20" r="7"  fill="#0A1628"/>
+            <circle cx="20" cy="20" r="7"  fill="url(#cd-co)"/>
+          </svg>
+          <span class="logo-text">eclypse</span>
+        </a>
+      </div>
+
+      <figure class="glasses-wrap" id="gl-dark" aria-label="Gafas Eclipse Dark">
+        <img src="eclipse-dark.png" alt="Gafas de eclipse solar modelo Eclipse Dark, montura azul navy, lentes oscuras con reflejo púrpura">
+      </figure>
+
+      <p class="model-name">ECLIPSE DARK</p>
+      <p class="model-sub">Inmersión Total</p>
+      <p class="model-cert">Protección ISO 12312-2 · CE</p>
+
+      <div class="particles" id="pt-dark" aria-hidden="true"></div>
+    </div>
+
+    <!-- Countdown bar -->
+    <div class="cd-bar" role="timer" aria-label="Cuenta atrás para el eclipse solar">
+      <span class="cd-label">ECLIPSE TOTAL · ESPAÑA</span>
+      <div class="cd-units">
+        <div class="cd-unit"><span class="cd-num" id="cd-d">---</span><span class="cd-tag">días</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><span class="cd-tag">h</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><span class="cd-tag">min</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><span class="cd-tag">seg</span></div>
+      </div>
+      <span class="cd-label">12 · 08 · 2026</span>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint" id="scroll-hint" aria-hidden="true">
+      <span>SCROLL</span><div class="scroll-arrow"></div>
+    </div>
+
+  </div>
+</div><!-- /scroll-zone -->
+
+
+<!-- ═══════════════════════════════════════════════════
+     §2 TRANSICIÓN + HEADLINE
+════════════════════════════════════════════════════ -->
+<section id="transition" aria-labelledby="trans-title">
+  <div class="t-panel t-left"  id="t-left"  aria-hidden="true"></div>
+  <div class="t-panel t-right" id="t-right" aria-hidden="true"></div>
+  <div class="t-content" id="t-content">
+    <h2 class="t-headline" id="trans-title">Tu retina no tiene<br>segunda oportunidad.</h2>
+    <p class="t-sub">El eclipse solar total del 12 de agosto de 2026 será el espectáculo astronómico del siglo en España. Pero sin protección certificada, bastará un instante para dañar tu visión de forma irreversible.</p>
+    <div class="t-stat" role="note">
+      <div class="t-stat-num" id="stat-secs" aria-live="polite">0</div>
+      <div class="t-stat-label">segundos mirando al sol sin protección<br>son suficientes para causar daño permanente en la retina</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     §3 ¿POR QUÉ CERTIFICADAS?
+════════════════════════════════════════════════════ -->
+<section id="why" aria-labelledby="why-title">
+  <span class="eyebrow">Ciencia y seguridad</span>
+  <h2 class="section-title" id="why-title">¿Por qué necesitas<br>protección certificada?</h2>
+
+  <div class="why-grid">
+
+    <article class="why-card" style="transition-delay:0s">
+      <div class="why-icon" aria-hidden="true">
+        <svg viewBox="0 0 26 26" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="13" cy="13" rx="8" ry="5.5"/>
+          <circle cx="13" cy="13" r="2.5" fill="var(--gold)" stroke="none"/>
+          <line x1="13" y1="4" x2="13" y2="1.5"/>
+          <line x1="19.5" y1="7" x2="21.5" y2="5"/>
+          <line x1="22" y1="13" x2="24.5" y2="13"/>
+          <path d="M 13 13 L 17 7" stroke="#f87171" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3>Retinopatía solar</h3>
+      <p>La radiación solar infrarroja y ultravioleta quema la retina sin que sientas dolor. El daño es silencioso e irreversible: pérdida de visión central permanente.</p>
+    </article>
+
+    <article class="why-card" style="transition-delay:.1s">
+      <div class="why-icon" aria-hidden="true">
+        <svg viewBox="0 0 26 26" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 13 Q13 4 22 13 Q13 22 4 13"/>
+          <circle cx="13" cy="13" r="3"/>
+          <line x1="5" y1="5" x2="21" y2="21" stroke="#f87171" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3>Las gafas de sol no sirven</h3>
+      <p>Ni las gafas de sol más oscuras bloquean la radiación infrarroja. Solo los filtros certificados ISO 12312-2 garantizan la atenuación óptica necesaria para observar el sol con seguridad.</p>
+    </article>
+
+    <article class="why-card" style="transition-delay:.2s">
+      <div class="why-icon" aria-hidden="true">
+        <svg viewBox="0 0 26 26" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="13" cy="13" r="9"/>
+          <circle cx="13" cy="13" r="5"/>
+          <path d="M13 4 A9 9 0 0 1 22 13" stroke="#f87171" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3>Riesgo en todas las fases</h3>
+      <p>Durante las fases parciales —antes y después de la totalidad— el sol sigue emitiendo radiación letal. Solo los ~2 minutos 57 segundos de totalidad completa permiten mirar sin filtro.</p>
+    </article>
+
+    <article class="why-card" style="transition-delay:.3s">
+      <div class="why-icon" aria-hidden="true">
+        <svg viewBox="0 0 26 26" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 3 L15.5 9 L22 9.5 L17.2 14 L18.8 21 L13 17.5 L7.2 21 L8.8 14 L4 9.5 L10.5 9 Z"/>
+          <polyline points="9,13 12,16 17,10" stroke="#4ade80" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3>Certificación que protege de verdad</h3>
+      <p>Nuestras gafas cumplen la normativa europea de Equipos de Protección Individual (EPI Categoría I), con certificado CE y filtros ISO 12312-2. No es marketing — es exigencia legal.</p>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     §4 DATOS CURIOSOS
+════════════════════════════════════════════════════ -->
+<section id="facts" aria-labelledby="facts-title">
+  <span class="eyebrow" style="text-align:center;display:block;">Astronómicamente fascinante</span>
+  <h2 class="section-title" id="facts-title">El eclipse en datos</h2>
+
+  <div class="facts-grid">
+
+    <article class="fact-card" style="transition-delay:0s">
+      <div class="fact-num">1959</div>
+      <div class="fact-label">Último eclipse total en España</div>
+      <p class="fact-desc">Han pasado 67 años desde el último eclipse total visible desde la península. El próximo después de 2026 no será hasta 2070. Esta es la oportunidad de tu vida.</p>
+    </article>
+
+    <article class="fact-card" style="transition-delay:.08s">
+      <div class="fact-num">2m 57s</div>
+      <div class="fact-label">Duración de la totalidad</div>
+      <p class="fact-desc">Algo más de dos minutos en los que el día se convertirá en noche, descenderá la temperatura y aparecerán estrellas en pleno agosto.</p>
+    </article>
+
+    <article class="fact-card" style="transition-delay:.16s">
+      <div class="fact-num">85%</div>
+      <div class="fact-label">Del territorio español con eclipse parcial</div>
+      <p class="fact-desc">La franja de totalidad cruza España de noroeste a sureste. Fuera de ella, millones de españoles experimentarán un eclipse parcial de gran magnitud.</p>
+    </article>
+
+    <article class="fact-card" style="transition-delay:.24s">
+      <div class="fact-num">1.000.000°C</div>
+      <div class="fact-label">Temperatura de la corona solar</div>
+      <p class="fact-desc">La corona —visible solo durante la totalidad— es paradójicamente más caliente que la superficie del sol (5.500°C). Un misterio que la ciencia aún estudia.</p>
+    </article>
+
+    <article class="fact-card" style="transition-delay:.32s">
+      <div class="fact-num">3.000 km/h</div>
+      <div class="fact-label">Velocidad de la sombra lunar</div>
+      <p class="fact-desc">La sombra de la Luna tardará apenas 344 segundos en cruzar España a esa velocidad, creando una cortina de oscuridad que avanza de noroeste a sureste.</p>
+    </article>
+
+    <article class="fact-card" style="transition-delay:.40s">
+      <div class="fact-num">1.05</div>
+      <div class="fact-label">Magnitud del eclipse</div>
+      <p class="fact-desc">El disco lunar será un 5% más grande que el solar, creando un eclipse total "generoso" con una corona especialmente prominente y visible.</p>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     §5 MAPA DE ESPAÑA
+════════════════════════════════════════════════════ -->
+<section id="map" aria-labelledby="map-title">
+  <span class="eyebrow">Geografía del eclipse</span>
+  <h2 class="section-title section-title--dark" id="map-title">¿Dónde se verá el eclipse total?</h2>
+  <p class="section-body fade-in">La franja de totalidad cruzará España de noroeste a sureste el 12 de agosto de 2026.</p>
+
+  <div class="map-container" role="img" aria-label="Mapa de España con la franja de totalidad del eclipse solar del 12 de agosto de 2026">
+    <!-- Tooltip -->
+    <div class="map-tooltip" id="map-tooltip" role="tooltip" aria-live="polite">
+      <strong id="tt-city"></strong>
+      <span id="tt-info"></span>
+    </div>
+
+    <!-- SVG map — simplified Spain outline + totality band + cities -->
+    <svg id="spain-map" viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="band-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#D4AF37" stop-opacity=".08"/>
+          <stop offset="40%"  stop-color="#D4AF37" stop-opacity=".28"/>
+          <stop offset="100%" stop-color="#D4AF37" stop-opacity=".06"/>
+        </linearGradient>
+        <filter id="city-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <clipPath id="spain-clip">
+          <!-- simplified Spain mainland path -->
+          <path d="M 138,28 L 180,18 L 240,12 L 310,16 L 370,10 L 430,8 L 490,14
+                   L 538,22 L 570,36 L 590,58 L 608,82 L 618,110 L 622,138
+                   L 630,158 L 638,178 L 650,196 L 656,218 L 652,240
+                   L 644,260 L 634,278 L 620,292 L 600,310 L 578,324
+                   L 556,338 L 530,350 L 502,360 L 472,368 L 440,374
+                   L 408,378 L 374,380 L 340,382 L 308,380 L 278,376
+                   L 250,368 L 222,356 L 198,342 L 174,322 L 154,302
+                   L 136,278 L 118,254 L 102,228 L 90,200 L 80,172
+                   L 74,144 L 72,116 L 76,90 L 86,68 L 104,48 Z"/>
+        </clipPath>
+      </defs>
+
+      <!-- Ocean bg subtle -->
+      <rect width="760" height="520" fill="rgba(30,58,138,.04)" rx="16"/>
+
+      <!-- Spain mainland fill -->
+      <path d="M 138,28 L 180,18 L 240,12 L 310,16 L 370,10 L 430,8 L 490,14
+               L 538,22 L 570,36 L 590,58 L 608,82 L 618,110 L 622,138
+               L 630,158 L 638,178 L 650,196 L 656,218 L 652,240
+               L 644,260 L 634,278 L 620,292 L 600,310 L 578,324
+               L 556,338 L 530,350 L 502,360 L 472,368 L 440,374
+               L 408,378 L 374,380 L 340,382 L 308,380 L 278,376
+               L 250,368 L 222,356 L 198,342 L 174,322 L 154,302
+               L 136,278 L 118,254 L 102,228 L 90,200 L 80,172
+               L 74,144 L 72,116 L 76,90 L 86,68 L 104,48 Z"
+            fill="rgba(30,58,138,.08)" stroke="rgba(30,58,138,.35)" stroke-width="1.5"/>
+
+      <!-- Portugal area (lighter) -->
+      <path d="M 138,28 L 114,46 L 96,72 L 80,100 L 72,130 L 74,162
+               L 82,194 L 96,222 L 112,248 L 130,270 L 150,294 L 168,314
+               L 186,330 L 200,338 L 186,330 L 168,314 L 150,290 L 132,266
+               L 114,240 L 100,210 L 90,178 L 84,148 L 86,118 L 96,90 L 114,66 Z"
+            fill="rgba(30,58,138,.04)" stroke="rgba(30,58,138,.15)" stroke-width="1" stroke-dasharray="4 3"/>
+
+      <!-- Totality band — diagonal NW to SE -->
+      <polygon
+        points="60,60  230,30  680,230  680,310  220,110  60,140"
+        fill="url(#band-grad)"
+        clip-path="url(#spain-clip)"/>
+      <!-- Band edges (dashed) -->
+      <line x1="60"  y1="60"  x2="680" y2="230" stroke="rgba(212,175,55,.55)" stroke-width="1.5" stroke-dasharray="8 5"/>
+      <line x1="60"  y1="140" x2="680" y2="310" stroke="rgba(212,175,55,.55)" stroke-width="1.5" stroke-dasharray="8 5"/>
+
+      <!-- "FRANJA DE TOTALIDAD" label on band -->
+      <text x="350" y="148" font-family="Orbitron,sans-serif" font-size="9" fill="rgba(212,175,55,.7)"
+            text-anchor="middle" transform="rotate(-16 350 148)" letter-spacing="3">FRANJA DE TOTALIDAD</text>
+
+      <!-- ── Cities INSIDE totality (gold) ── -->
+      <!-- Oviedo -->
+      <g class="city-dot" data-city="Oviedo" data-pct="100%" data-hora="12:02h" data-dur="2m 14s" transform="translate(192,56)">
+        <circle r="7" fill="var(--gold)" filter="url(#city-glow)" opacity=".9"/>
+        <circle r="3.5" fill="var(--dark)"/>
+        <text x="10" y="4" font-family="Work Sans,sans-serif" font-size="11" fill="var(--gold)" font-weight="600">Oviedo</text>
+        <text x="10" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(212,175,55,.65)">100%</text>
+      </g>
+
+      <!-- Bilbao -->
+      <g class="city-dot" data-city="Bilbao" data-pct="100%" data-hora="12:03h" data-dur="1m 58s" transform="translate(310,62)">
+        <circle r="7" fill="var(--gold)" filter="url(#city-glow)" opacity=".9"/>
+        <circle r="3.5" fill="var(--dark)"/>
+        <text x="10" y="4" font-family="Work Sans,sans-serif" font-size="11" fill="var(--gold)" font-weight="600">Bilbao</text>
+        <text x="10" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(212,175,55,.65)">100%</text>
+      </g>
+
+      <!-- Burgos -->
+      <g class="city-dot" data-city="Burgos" data-pct="100%" data-hora="12:04h" data-dur="1m 42s" transform="translate(290,120)">
+        <circle r="7" fill="var(--gold)" filter="url(#city-glow)" opacity=".9"/>
+        <circle r="3.5" fill="var(--dark)"/>
+        <text x="10" y="4" font-family="Work Sans,sans-serif" font-size="11" fill="var(--gold)" font-weight="600">Burgos</text>
+        <text x="10" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(212,175,55,.65)">100%</text>
+      </g>
+
+      <!-- Zaragoza -->
+      <g class="city-dot" data-city="Zaragoza" data-pct="100%" data-hora="12:05h" data-dur="2m 57s" transform="translate(430,148)">
+        <circle r="7" fill="var(--gold)" filter="url(#city-glow)" opacity=".9"/>
+        <circle r="3.5" fill="var(--dark)"/>
+        <text x="10" y="4" font-family="Work Sans,sans-serif" font-size="11" fill="var(--gold)" font-weight="600">Zaragoza</text>
+        <text x="10" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(212,175,55,.65)">100%</text>
+      </g>
+
+      <!-- Valencia -->
+      <g class="city-dot" data-city="Valencia" data-pct="100%" data-hora="12:06h" data-dur="1m 12s" transform="translate(518,250)">
+        <circle r="7" fill="var(--gold)" filter="url(#city-glow)" opacity=".9"/>
+        <circle r="3.5" fill="var(--dark)"/>
+        <text x="10" y="4" font-family="Work Sans,sans-serif" font-size="11" fill="var(--gold)" font-weight="600">Valencia</text>
+        <text x="10" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(212,175,55,.65)">100%</text>
+      </g>
+
+      <!-- ── Cities OUTSIDE totality (purple) ── -->
+      <!-- Madrid -->
+      <g class="city-dot" data-city="Madrid" data-pct="97%" data-hora="12:04h" data-dur="Parcial" transform="translate(298,212)">
+        <circle r="6" fill="var(--purple)" filter="url(#city-glow)" opacity=".85"/>
+        <circle r="3" fill="var(--dark)"/>
+        <text x="9" y="4"  font-family="Work Sans,sans-serif" font-size="11" fill="#a5b4fc" font-weight="600">Madrid</text>
+        <text x="9" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(99,102,241,.7)">97%</text>
+      </g>
+
+      <!-- Barcelona -->
+      <g class="city-dot" data-city="Barcelona" data-pct="95%" data-hora="12:05h" data-dur="Parcial" transform="translate(550,108)">
+        <circle r="6" fill="var(--purple)" filter="url(#city-glow)" opacity=".85"/>
+        <circle r="3" fill="var(--dark)"/>
+        <text x="9" y="4"  font-family="Work Sans,sans-serif" font-size="11" fill="#a5b4fc" font-weight="600">Barcelona</text>
+        <text x="9" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(99,102,241,.7)">95%</text>
+      </g>
+
+      <!-- Sevilla -->
+      <g class="city-dot" data-city="Sevilla" data-pct="82%" data-hora="12:07h" data-dur="Parcial" transform="translate(196,318)">
+        <circle r="6" fill="var(--purple)" filter="url(#city-glow)" opacity=".85"/>
+        <circle r="3" fill="var(--dark)"/>
+        <text x="9" y="4"  font-family="Work Sans,sans-serif" font-size="11" fill="#a5b4fc" font-weight="600">Sevilla</text>
+        <text x="9" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(99,102,241,.7)">82%</text>
+      </g>
+
+      <!-- Málaga -->
+      <g class="city-dot" data-city="Málaga" data-pct="78%" data-hora="12:08h" data-dur="Parcial" transform="translate(252,370)">
+        <circle r="6" fill="var(--purple)" filter="url(#city-glow)" opacity=".85"/>
+        <circle r="3" fill="var(--dark)"/>
+        <text x="9" y="4"  font-family="Work Sans,sans-serif" font-size="11" fill="#a5b4fc" font-weight="600">Málaga</text>
+        <text x="9" y="16" font-family="Work Sans,sans-serif" font-size="9.5" fill="rgba(99,102,241,.7)">78%</text>
+      </g>
+
+      <!-- Mallorca (island hint) -->
+      <ellipse cx="668" cy="298" rx="30" ry="18" fill="rgba(30,58,138,.08)" stroke="rgba(30,58,138,.25)" stroke-width="1.2"/>
+      <text x="668" y="302" font-family="Work Sans,sans-serif" font-size="9" fill="rgba(30,58,138,.5)" text-anchor="middle">Mallorca</text>
+
+      <!-- Canarias hint -->
+      <rect x="30" y="400" width="100" height="56" rx="6" fill="rgba(30,58,138,.05)" stroke="rgba(30,58,138,.2)" stroke-width="1" stroke-dasharray="4 3"/>
+      <text x="80" y="432" font-family="Work Sans,sans-serif" font-size="9" fill="rgba(30,58,138,.5)" text-anchor="middle">Islas Canarias</text>
+      <text x="80" y="444" font-family="Work Sans,sans-serif" font-size="8" fill="rgba(30,58,138,.4)" text-anchor="middle">(eclipse parcial ~72%)</text>
+    </svg>
+  </div>
+
+  <div class="map-legend" role="list">
+    <div class="legend-item" role="listitem"><span class="legend-dot ld-gold"></span>Franja de totalidad (100%)</div>
+    <div class="legend-item" role="listitem"><span class="legend-dot ld-purple"></span>Eclipse parcial</div>
+  </div>
+
+  <p class="map-note fade-in">
+    Aunque toda España verá al menos un eclipse parcial, solo dentro de la franja de totalidad se experimentará la oscuridad completa, el descenso brusco de temperatura y la corona solar a simple vista. <strong>Si puedes, desplázate a la franja.</strong>
+  </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     §6 TIMELINE
+════════════════════════════════════════════════════ -->
+<section id="timeline" aria-labelledby="tl-title">
+  <span class="eyebrow" style="text-align:center;display:block;">Minuto a minuto</span>
+  <h2 class="section-title" id="tl-title">Cronología del eclipse<br>— 12 de agosto de 2026</h2>
+  <p class="timeline-sub">Horarios aproximados para el centro peninsular (UTC+2). Consulta los horarios exactos para tu localización.</p>
+
+  <div class="tl-track" role="list">
+
+    <div class="tl-item" style="transition-delay:0s" role="listitem">
+      <div class="tl-dot" aria-hidden="true"></div>
+      <div class="tl-time">10:30 h</div>
+      <div class="tl-phase">Primer contacto</div>
+      <p class="tl-desc">La Luna comienza a cubrir el disco solar. El eclipse parcial da inicio. La luz no cambia aún de forma perceptible, pero el proceso ya es imparable.</p>
+      <span class="tl-warn on" aria-label="Usar gafas">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6a9 9 0 0110 0M4 6a5 5 0 014 0"/><circle cx="6" cy="6" r="1.2" fill="currentColor"/></svg>
+        USA TUS GAFAS
+      </span>
+    </div>
+
+    <div class="tl-item" style="transition-delay:.08s" role="listitem">
+      <div class="tl-dot" aria-hidden="true"></div>
+      <div class="tl-time">11:45 h</div>
+      <div class="tl-phase">Eclipse parcial avanzado</div>
+      <p class="tl-desc">El sol ha perdido más del 80% de su superficie visible. La luz del día adopta una tonalidad extraña y las sombras de los árboles proyectan medias lunas en el suelo.</p>
+      <span class="tl-warn on" aria-label="Mantén las gafas">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6a9 9 0 0110 0M4 6a5 5 0 014 0"/><circle cx="6" cy="6" r="1.2" fill="currentColor"/></svg>
+        MANTÉN TUS GAFAS
+      </span>
+    </div>
+
+    <div class="tl-item" style="transition-delay:.16s" role="listitem">
+      <div class="tl-dot" aria-hidden="true"></div>
+      <div class="tl-time">12:01 h</div>
+      <div class="tl-phase">Perlas de Baily</div>
+      <p class="tl-desc">Los últimos rayos de sol se filtran entre los valles y montañas de la Luna, creando una cadena de puntos de luz brillantes sobre el limbo lunar. Un fenómeno de segundos.</p>
+      <span class="tl-warn on" aria-label="Gafas puestas">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6a9 9 0 0110 0M4 6a5 5 0 014 0"/><circle cx="6" cy="6" r="1.2" fill="currentColor"/></svg>
+        GAFAS PUESTAS
+      </span>
+    </div>
+
+    <div class="tl-item" style="transition-delay:.24s" role="listitem">
+      <div class="tl-dot" aria-hidden="true"></div>
+      <div class="tl-time">12:02 h</div>
+      <div class="tl-phase">Anillo de diamante</div>
+      <p class="tl-desc">El último rayo solar forma un destello brillante junto a la oscuridad de la corona emergente. El momento más icónico y fotografiado de cualquier eclipse total.</p>
+      <span class="tl-warn on" aria-label="Gafas aún puestas">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6a9 9 0 0110 0M4 6a5 5 0 014 0"/><circle cx="6" cy="6" r="1.2" fill="currentColor"/></svg>
+        GAFAS AÚN PUESTAS
+      </span>
+    </div>
+
+    <div class="tl-item" style="transition-delay:.32s" role="listitem">
+      <div class="tl-dot total" aria-hidden="true"></div>
+      <div class="tl-time" style="color:#fbbf24;font-size:.85rem;">★ 12:03 h — 12:06 h ★</div>
+      <div class="tl-phase" style="color:var(--gold);font-size:1.15rem;">¡TOTALIDAD!</div>
+      <p class="tl-desc">Oscuridad total. Las estrellas y planetas se vuelven visibles. La temperatura desciende varios grados. La corona solar —la atmósfera exterior— se despliega en todo su esplendor. Es el único momento de 2 min 57 seg en el que puedes mirar al sol directamente.</p>
+      <span class="tl-warn off" aria-label="Puedes quitar las gafas durante la totalidad">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6a9 9 0 0110 0M4 6a5 5 0 014 0"/><circle cx="6" cy="6" r="1.2" fill="currentColor"/><line x1="10" y1="2" x2="2" y2="10" stroke="#f87171"/></svg>
+        ÚNICO MOMENTO SIN GAFAS · 2 min 57 seg
+      </span>
+    </div>
+
+    <div class="tl-item" style="transition-delay:.4s" role="listitem">
+      <div class="tl-dot" aria-hidden="true"></div>
+      <div class="tl-time">12:06 h</div>
+      <div class="tl-phase">Fin de totalidad</div>
+      <p class="tl-desc">Segundo anillo de diamante. La fotosfera solar vuelve a ser visible. El peligro regresa en décimas de segundo. Vuelve a protegerte inmediatamente.</p>
+      <span class="tl-warn on" aria-label="Ponte las gafas inmediatamente">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6a9 9 0 0110 0M4 6a5 5 0 014 0"/><circle cx="6" cy="6" r="1.2" fill="currentColor"/></svg>
+        PONTE LAS GAFAS INMEDIATAMENTE
+      </span>
+    </div>
+
+    <div class="tl-item" style="transition-delay:.48s" role="listitem">
+      <div class="tl-dot" aria-hidden="true"></div>
+      <div class="tl-time">13:30 h</div>
+      <div class="tl-phase">Último contacto</div>
+      <p class="tl-desc">La Luna se separa completamente del disco solar. El eclipse ha concluido. El próximo eclipse total sobre España: 2070.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     §7 PACKS DE PREVENTA
+════════════════════════════════════════════════════ -->
+<section id="packs" aria-labelledby="packs-title">
+  <span class="eyebrow">Preventa exclusiva</span>
+  <h2 class="section-title" id="packs-title">Asegura tu visión<br>— y la de los tuyos</h2>
+  <p class="packs-sub">Gafas certificadas ISO 12312-2 con marcado CE. Envío a toda España.</p>
+
+  <div class="model-toggle" role="group" aria-label="Seleccionar modelo">
+    <button class="mtbtn mtbtn-gold on" id="btn-gold"   onclick="setModel('gold')"   aria-pressed="true">☀ Solar Light</button>
+    <button class="mtbtn mtbtn-purple"  id="btn-purple" onclick="setModel('purple')" aria-pressed="false">◑ Eclipse Dark</button>
+  </div>
+
+  <div class="packs-row model-gold" id="packs-row" role="list"></div>
+
+  <p class="packs-guarantees" aria-label="Garantías de compra">
+    <span>🔒 Pago seguro</span>
+    <span>📦 Envío en 24-48h</span>
+    <span>✅ 100% certificadas</span>
+    <span>↩️ Devolución 14 días</span>
+  </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     §8 FOOTER
+════════════════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <a href="#" class="logo logo--dark" aria-label="eclypse inicio" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+    <svg width="28" height="28" viewBox="0 0 40 40" aria-hidden="true">
+      <defs>
+        <radialGradient id="ft-cor" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#D4AF37" stop-opacity="0"/><stop offset="60%" stop-color="#D4AF37" stop-opacity=".13"/><stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/></radialGradient>
+        <filter id="ft-bl"><feGaussianBlur stdDeviation="2.5"/></filter>
+        <radialGradient id="ft-co" cx="35%" cy="35%" r="70%"><stop offset="0%" stop-color="#000" stop-opacity=".8"/><stop offset="100%" stop-color="#0A1628" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="20" cy="20" r="19" fill="url(#ft-cor)" filter="url(#ft-bl)"/>
+      <circle cx="20" cy="20" r="16" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity=".5"/>
+      <circle cx="20" cy="20" r="11" fill="none" stroke="#6366F1" stroke-width="1.5" opacity=".8"/>
+      <circle cx="20" cy="20" r="7"  fill="#0A1628"/>
+      <circle cx="20" cy="20" r="7"  fill="url(#ft-co)"/>
+    </svg>
+    <span class="logo-text" style="font-size:1.1rem;">eclypse</span>
+  </a>
+
+  <p class="foot-copy">© 2026 eclypse — Protección certificada para el eclipse solar</p>
+  <p class="foot-certline">Gafas homologadas CE · ISO 12312-2 · EPI Categoría I</p>
+  <a href="mailto:info@eclypse.es" class="foot-email" aria-label="Contactar por email">info@eclypse.es</a>
+
+  <nav class="foot-links" aria-label="Navegación del pie de página">
+    <a href="#">Aviso Legal</a>
+    <a href="#">Política de Privacidad</a>
+    <a href="#">Contacto</a>
+  </nav>
+
+  <div class="socials">
+    <a href="#" class="soc" aria-label="Instagram">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+    </a>
+    <a href="#" class="soc" aria-label="TikTok">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+    </a>
+    <a href="#" class="soc" aria-label="X (Twitter)">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L2.1 2.25h6.945l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ── COUNTDOWN ─────────────────────────────────────── */
+const ECLIPSE = new Date('2026-08-12T12:00:00+02:00');
+function pad(n,d=2){return String(n).padStart(d,'0');}
+function tick(){
+  const ms = ECLIPSE - Date.now();
+  if(ms <= 0) return;
+  const d=Math.floor(ms/86400000), h=Math.floor(ms%86400000/3600000),
+        m=Math.floor(ms%3600000/60000), s=Math.floor(ms%60000/1000);
+  document.getElementById('cd-d').textContent=pad(d,3);
+  document.getElementById('cd-h').textContent=pad(h);
+  document.getElementById('cd-m').textContent=pad(m);
+  document.getElementById('cd-s').textContent=pad(s);
+}
+tick(); setInterval(tick,1000);
+
+/* ── PARTICLES ─────────────────────────────────────── */
+(function spawnParticles(){
+  const ptL=document.getElementById('pt-light');
+  const ptD=document.getElementById('pt-dark');
+  const frag1=document.createDocumentFragment(), frag2=document.createDocumentFragment();
+  for(let i=0;i<28;i++){
+    const p=document.createElement('div'); p.className='p p-ray';
+    const sz=Math.random()*3+1.5;
+    p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation:twk ${2+Math.random()*3}s ${Math.random()*2}s ease-in-out infinite;`;
+    p.dataset.b=(Math.random()*.65+.2).toFixed(2); frag1.appendChild(p);
+  }
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div'); p.className='p p-star';
+    const sz=Math.random()*2.2+.8;
+    p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation:twk ${1.5+Math.random()*3}s ${Math.random()*3}s ease-in-out infinite;`;
+    p.dataset.b=(Math.random()*.75+.1).toFixed(2); frag2.appendChild(p);
+  }
+  ptL.appendChild(frag1); ptD.appendChild(frag2);
+})();
+document.head.insertAdjacentHTML('beforeend','<style>@keyframes twk{0%,100%{transform:scale(1)}50%{transform:scale(2)}}</style>');
+
+/* ── SCROLL ANIMATION (GLASSES) ──────────────────── */
+const scrollZone = document.getElementById('scroll-zone');
+const glLight    = document.getElementById('gl-light');
+const glDark     = document.getElementById('gl-dark');
+const hint       = document.getElementById('scroll-hint');
+let raf=false;
+
+function getP(){
+  const r=scrollZone.getBoundingClientRect();
+  return Math.max(0,Math.min(1,-r.top/(scrollZone.offsetHeight-window.innerHeight)));
+}
+function easeOut(t){return 1-(1-t)*(1-t);}
+
+function frame(){
+  raf=false;
+  const p=getP();
+
+  // phase 1: 0→0.35 — enter (scale up + rotateY, opacity in)
+  // phase 2: 0.35→0.65 — float (oscillate rotateY + translateY)
+  // phase 3: 0.65→1 — exit (scale down + opacity out)
+
+  let scaleL, scaleD, rotL, rotD, transY, opL, opD;
+
+  if(p <= 0.35){
+    const t=p/0.35;
+    const e=easeOut(t);
+    scaleL=0.7+0.3*e; scaleD=0.7+0.3*e;
+    rotL=8-8*e; rotD=-8+8*e;
+    transY=0; opL=0.5+0.5*e; opD=0.5+0.5*e;
+  } else if(p <= 0.65){
+    const t=(p-0.35)/0.30;
+    scaleL=1; scaleD=1;
+    rotL=Math.sin(t*Math.PI*2)*8;
+    rotD=Math.sin(t*Math.PI*2)*-8;
+    transY=Math.sin(t*Math.PI*2)*-15;
+    opL=1; opD=1;
+  } else {
+    const t=(p-0.65)/0.35;
+    const e=easeOut(t);
+    scaleL=1-0.15*e; scaleD=1-0.15*e;
+    rotL=0; rotD=0; transY=0;
+    opL=1-e; opD=1-e;
+  }
+
+  glLight.style.transform=`perspective(1200px) rotateY(${rotL}deg) scale(${scaleL}) translateY(${transY}px)`;
+  glDark.style.transform =`perspective(1200px) rotateY(${rotD}deg) scale(${scaleD}) translateY(${transY}px)`;
+  glLight.style.opacity=opL;
+  glDark.style.opacity=opD;
+
+  /* particle opacity tied to scroll progress */
+  const pf=Math.min(1,p*3);
+  document.querySelectorAll('.p').forEach(el=>{ el.style.opacity=(parseFloat(el.dataset.b)*pf).toString(); });
+
+  hint.classList.toggle('gone', p>0.05);
+}
+
+window.addEventListener('scroll',()=>{ if(!raf){raf=true;requestAnimationFrame(frame);} },{passive:true});
+
+/* ── TRANSITION: panels open ──────────────────────── */
+const transObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.getElementById('t-left').classList.add('open');
+      document.getElementById('t-right').classList.add('open');
+      document.getElementById('t-content').classList.add('show');
+      /* animate the stat counter */
+      animateStat(document.getElementById('stat-secs'),3,1200);
+    }
+  });
+},{threshold:.4});
+transObs.observe(document.getElementById('transition'));
+
+function animateStat(el,target,duration){
+  const start=performance.now();
+  function step(now){
+    const t=Math.min(1,(now-start)/duration);
+    el.textContent=Math.round(target*t);
+    if(t<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ── GENERIC FADE-IN OBSERVER ─────────────────────── */
+const fadeObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+},{threshold:.15});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
+
+/* ── WHY CARDS stagger ────────────────────────────── */
+const whyObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.querySelectorAll('.why-card').forEach(c=>c.classList.add('show'));
+  });
+},{threshold:.2});
+whyObs.observe(document.getElementById('why'));
+
+/* ── FACT CARDS stagger ───────────────────────────── */
+const factObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.querySelectorAll('.fact-card').forEach(c=>c.classList.add('show'));
+  });
+},{threshold:.15});
+factObs.observe(document.getElementById('facts'));
+
+/* ── TIMELINE stagger ─────────────────────────────── */
+const tlObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.querySelectorAll('.tl-item').forEach(c=>c.classList.add('show'));
+  });
+},{threshold:.1});
+tlObs.observe(document.getElementById('timeline'));
+
+/* ── MAP TOOLTIPS ─────────────────────────────────── */
+const tooltip=document.getElementById('map-tooltip');
+const ttCity=document.getElementById('tt-city');
+const ttInfo=document.getElementById('tt-info');
+const svgEl=document.getElementById('spain-map');
+
+document.querySelectorAll('.city-dot').forEach(g=>{
+  g.style.cursor='pointer';
+  function showTip(e){
+    const svgRect=svgEl.getBoundingClientRect();
+    const mapCont=svgEl.closest('.map-container').getBoundingClientRect();
+    const vb=svgEl.viewBox.baseVal;
+    const scaleX=svgEl.clientWidth/vb.width;
+    const scaleY=svgEl.clientHeight/vb.height;
+    const t=g.transform.baseVal[0].matrix;
+    const cx=svgRect.left+t.e*scaleX-mapCont.left;
+    const cy=svgRect.top +t.f*scaleY-mapCont.top;
+    tooltip.style.left=cx+'px'; tooltip.style.top=cy+'px';
+    ttCity.textContent=g.dataset.city;
+    ttInfo.textContent=`${g.dataset.pct} cobertura · Máximo ${g.dataset.hora}${g.dataset.dur!=='Parcial'?' · '+g.dataset.dur:''}`;
+    tooltip.classList.add('show');
+  }
+  g.addEventListener('mouseenter',showTip);
+  g.addEventListener('touchstart',showTip,{passive:true});
+  g.addEventListener('mouseleave',()=>tooltip.classList.remove('show'));
+  g.addEventListener('touchend',()=>setTimeout(()=>tooltip.classList.remove('show'),1600));
+});
+
+/* ── PACKS ────────────────────────────────────────── */
+const PACKS=[
+  {qty:1,  price:3,    desc:'Para ti',          base:3},
+  {qty:5,  price:12.5, desc:'Para la familia',  base:3},
+  {qty:10, price:20,   desc:'Para los amigos',  base:3},
+  {qty:20, price:35,   desc:'Para el grupo',    base:3},
+  {qty:50, price:75,   desc:'Para el evento',   base:3},
+];
+let activeModel='solar-light';
+
+function fmt(n){return n.toFixed(2).replace('.',',')+'\u20AC';}
+
+function renderPacks(){
+  const row=document.getElementById('packs-row');
+  row.innerHTML='';
+  const frag=document.createDocumentFragment();
+  PACKS.forEach((p,i)=>{
+    const upr=p.price/p.qty;
+    const saving=p.qty>1?Math.round((1-upr/p.base)*100):0;
+    const card=document.createElement('article');
+    card.className='pack'; card.setAttribute('role','listitem');
+    card.style.transitionDelay=(i*70)+'ms';
+    card.innerHTML=
+      `<div class="pack-qty orb">${p.qty}</div>`+
+      `<div class="pack-desc">${p.desc}</div>`+
+      `<div class="pack-price orb">${fmt(p.price)}</div>`+
+      `<div class="pack-upr">${fmt(upr)}&nbsp;/&nbsp;ud.</div>`+
+      `<div class="pack-savings">${saving>0?'Ahorras '+saving+'%':''}</div>`+
+      `<button class="pack-btn" `+
+        `data-qty="${p.qty}" data-model="${activeModel}" `+
+        `onclick="reservar(${p.qty},'${activeModel}')">`+
+        `Reservar ahora`+
+      `</button>`;
+    frag.appendChild(card);
+  });
+  row.appendChild(frag);
+  setTimeout(()=>row.querySelectorAll('.pack').forEach(c=>c.classList.add('show')),60);
+}
+
+function setModel(m){
+  activeModel=m==='gold'?'solar-light':'eclipse-dark';
+  const row=document.getElementById('packs-row');
+  row.className='packs-row model-'+m;
+  row.querySelectorAll('.pack').forEach(c=>c.classList.remove('show'));
+  document.getElementById('btn-gold').classList.toggle('on',m==='gold');
+  document.getElementById('btn-purple').classList.toggle('on',m==='purple');
+  document.getElementById('btn-gold').setAttribute('aria-pressed',m==='gold');
+  document.getElementById('btn-purple').setAttribute('aria-pressed',m==='purple');
+  setTimeout(()=>row.querySelectorAll('.pack').forEach(c=>c.classList.add('show')),60);
+  renderPacks();
+}
+
+function reservar(qty,model){
+  const mLabel=model==='solar-light'?'Solar Light':'Eclipse Dark';
+  alert(`Reserva: ${qty} ud${qty>1?'s':''} · ${mLabel}\n\nActivaremos el pago online próximamente. ¡Gracias!`);
+}
+
+renderPacks();
+
+/* ── PACKS observer ───────────────────────────────── */
+const packsObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.querySelectorAll('.pack').forEach(c=>c.classList.add('show'));
+  });
+},{threshold:.15});
+packsObs.observe(document.getElementById('packs'));
+</script>
+</body>
+</html>

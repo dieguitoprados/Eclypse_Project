@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eclypse - Brand Identity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-navy: #0A1628;
+            --primary-blue: #1E3A8A;
+            --accent-gold: #D4AF37;
+            --accent-purple: #6366F1;
+            --bg-dark: #0F172A;
+            --bg-light: #F8FAFC;
+            --text-light: #E2E8F0;
+            --text-dark: #1E293B;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            opacity: 0.8;
+            margin-bottom: 60px;
+            font-weight: 300;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+
+        /* Logo Principal */
+        .logo-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 60px 20px;
+        }
+
+        .logo-symbol {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .eclipse-outer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--accent-gold);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .eclipse-middle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .eclipse-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, var(--primary-navy), #000);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 40px rgba(99, 102, 241, 0.2),
+                inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .eclipse-corona {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, transparent 40%, rgba(212, 175, 55, 0.1) 60%, transparent 80%);
+            border-radius: 50%;
+            filter: blur(8px);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--text-light), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Variantes */
+        .variant-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .variant {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .variant:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .variant.dark {
+            background: var(--bg-dark);
+        }
+
+        .variant.light {
+            background: var(--bg-light);
+        }
+
+        .variant.light .logo-text {
+            background: linear-gradient(135deg, var(--primary-navy), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .variant.light .eclipse-outer {
+            border-color: var(--primary-blue);
+        }
+
+        .variant.light .eclipse-middle {
+            border-color: var(--accent-purple);
+        }
+
+        .variant-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            font-family: 'Orbitron', sans-serif;
+            opacity: 0.7;
+        }
+
+        /* Paleta de colores */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .color-swatch {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.05);
+        }
+
+        .color-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .color-hex {
+            font-family: monospace;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        /* Tipografía */
+        .type-sample {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+
+        .type-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .orbitron-sample {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .worksans-sample {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Botones de descarga */
+        .download-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 8px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-purple));
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .variant-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-main {
+                flex-direction: column;
+            }
+
+            .logo-text {
+                font-size: 3rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Logo pequeño para variantes */
+        .logo-small .logo-symbol {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-small .eclipse-outer {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-small .eclipse-middle {
+            width: 38px;
+            height: 38px;
+        }
+
+        .logo-small .eclipse-core {
+            width: 25px;
+            height: 25px;
+        }
+
+        .logo-small .eclipse-corona {
+            width: 56px;
+            height: 56px;
+        }
+
+        .logo-small .logo-text {
+            font-size: 2.5rem;
+        }
+
+        .logo-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tagline {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 300;
+            opacity: 0.7;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>eclypse</h1>
+        <p class="subtitle">Identidad Visual - Gafas de Eclipse Solar</p>
+
+        <!-- Logo Principal -->
+        <div class="card">
+            <h2 class="card-title">Logo Principal</h2>
+            <div class="logo-main">
+                <div class="logo-symbol">
+                    <div class="eclipse-corona"></div>
+                    <div class="eclipse-outer"></div>
+                    <div class="eclipse-middle"></div>
+                    <div class="eclipse-core"></div>
+                </div>
+                <div>
+                    <div class="logo-text">eclypse</div>
+                    <div class="tagline">Protección certificada para el eclipse</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variantes del Logo -->
+        <div class="card">
+            <h2 class="card-title">Variantes del Logo</h2>
+            <div class="variant-grid">
+                <!-- Fondo oscuro -->
+                <div class="variant dark" style="position: relative;">
+                    <span class="variant-label">Fondo Oscuro</span>
+                    <div class="logo-horizontal logo-small">
+                        <div class="logo-symbol">
+                            <div class="eclipse-corona"></div>
+                            <div class="eclipse-outer"></div>
+                            <div class="eclipse-middle"></div>
+                            <div class="eclipse-core"></div>
+                        </div>
+                        <div class="logo-text">eclypse</div>
+                    </div>
+                </div>
+
+                <!-- Fondo claro -->
+                <div class="variant light" style="position: relative;">
+                    <span class="variant-label" style="color: var(--primary-blue);">Fondo Claro</span>
+                    <div class="logo-horizontal logo-small">
+                        <div class="logo-symbol">
+                            <div class="eclipse-corona"></div>
+                            <div class="eclipse-outer"></div>
+                            <div class="eclipse-middle"></div>
+                            <div class="eclipse-core"></div>
+                        </div>
+                        <div class="logo-text">eclypse</div>
+                    </div>
+                </div>
+
+                <!-- Solo símbolo oscuro -->
+                <div class="variant dark" style="position: relative;">
+                    <span class="variant-label">Isotipo - Oscuro</span>
+                    <div class="logo-symbol">
+                        <div class="eclipse-corona"></div>
+                        <div class="eclipse-outer"></div>
+                        <div class="eclipse-middle"></div>
+                        <div class="eclipse-core"></div>
+                    </div>
+                </div>
+
+                <!-- Solo símbolo claro -->
+                <div class="variant light" style="position: relative;">
+                    <span class="variant-label" style="color: var(--primary-blue);">Isotipo - Claro</span>
+                    <div class="logo-symbol">
+                        <div class="eclipse-corona"></div>
+                        <div class="eclipse-outer"></div>
+                        <div class="eclipse-middle"></div>
+                        <div class="eclipse-core"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Paleta de Colores -->
+            <div class="card">
+                <h2 class="card-title">Paleta de Colores</h2>
+                <div class="color-grid">
+                    <div class="color-swatch" style="background: #0A1628;">
+                        <span class="color-name">Navy</span>
+                        <span class="color-hex">#0A1628</span>
+                    </div>
+                    <div class="color-swatch" style="background: #1E3A8A;">
+                        <span class="color-name">Azul</span>
+                        <span class="color-hex">#1E3A8A</span>
+                    </div>
+                    <div class="color-swatch" style="background: #D4AF37;">
+                        <span class="color-name">Oro</span>
+                        <span class="color-hex">#D4AF37</span>
+                    </div>
+                    <div class="color-swatch" style="background: #6366F1;">
+                        <span class="color-name">Púrpura</span>
+                        <span class="color-hex">#6366F1</span>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; font-size: 0.85rem; opacity: 0.8; line-height: 1.6;">
+                    <strong style="color: var(--accent-gold);">Navy y Azul:</strong> Seguridad, confianza, profesionalidad<br>
+                    <strong style="color: var(--accent-gold);">Oro:</strong> Calidad premium, protección certificada<br>
+                    <strong style="color: var(--accent-gold);">Púrpura:</strong> Toque astral, innovación
+                </div>
+            </div>
+
+            <!-- Tipografía -->
+            <div class="card">
+                <h2 class="card-title">Tipografía</h2>
+                <div class="type-sample">
+                    <div class="type-name">Orbitron - Display / Logo</div>
+                    <div class="orbitron-sample">eclypse</div>
+                    <div style="font-family: 'Orbitron', sans-serif; font-size: 0.9rem; opacity: 0.7;">
+                        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                        abcdefghijklmnopqrstuvwxyz 0123456789
+                    </div>
+                </div>
+                <div class="type-sample">
+                    <div class="type-name">Work Sans - Cuerpo de texto</div>
+                    <div class="worksans-sample">
+                        Protección certificada ISO 12312-2 para observación segura del eclipse solar. 
+                        Gafas homologadas CE como Equipo de Protección Individual categoría I.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de descarga -->
+        <div class="download-section">
+            <h2 class="card-title">Próximos pasos</h2>
+            <p style="margin-bottom: 20px; opacity: 0.9;">
+                Este diseño base está listo para implementar en tu web. Los elementos clave incluyen:
+            </p>
+            <ul style="margin-bottom: 20px; opacity: 0.9; line-height: 1.8;">
+                <li>✓ Logo principal con símbolo de eclipse protector</li>
+                <li>✓ Variantes para fondos claros y oscuros</li>
+                <li>✓ Isotipo (símbolo solo) para favicon y redes sociales</li>
+                <li>✓ Paleta de colores profesional con toque astral</li>
+                <li>✓ Tipografía Orbitron (sci-fi sutil) + Work Sans (legible)</li>
+            </ul>
+            <button class="download-btn" onclick="downloadSVG()">Descargar Logo SVG</button>
+            <button class="download-btn" onclick="downloadColors()">Descargar Paleta</button>
+            <button class="download-btn" onclick="window.print()">Imprimir Guía</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadSVG() {
+            // Crear SVG del logo
+            const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="100" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Corona (resplandor) -->
+    <defs>
+        <radialGradient id="corona">
+            <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.0"/>
+            <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    <circle cx="50" cy="50" r="45" fill="url(#corona)"/>
+    
+    <!-- Anillo exterior (oro) -->
+    <circle cx="50" cy="50" r="40" fill="none" stroke="#D4AF37" stroke-width="3" opacity="0.6"/>
+    
+    <!-- Anillo medio (púrpura) -->
+    <circle cx="50" cy="50" r="30" fill="none" stroke="#6366F1" stroke-width="2" opacity="0.8"/>
+    
+    <!-- Núcleo (eclipse) -->
+    <circle cx="50" cy="50" r="20" fill="#0A1628"/>
+    <circle cx="50" cy="50" r="20" fill="url(#innerShadow)"/>
+    <defs>
+        <radialGradient id="innerShadow">
+            <stop offset="0%" stop-color="#000000" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#0A1628" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    
+    <!-- Texto -->
+    <text x="110" y="62" font-family="Orbitron, sans-serif" font-size="48" font-weight="700" fill="#E2E8F0" letter-spacing="2">eclypse</text>
+</svg>`;
+
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'eclypse-logo.svg';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadColors() {
+            const colors = `PALETA DE COLORES ECLYPSE
+================================
+
+Colores Principales:
+--primary-navy: #0A1628 (Navy - Fondo principal, seguridad)
+--primary-blue: #1E3A8A (Azul - Profesionalidad, confianza)
+
+Colores de Acento:
+--accent-gold: #D4AF37 (Oro - Premium, certificación)
+--accent-purple: #6366F1 (Púrpura - Astral, innovación)
+
+Fondos:
+--bg-dark: #0F172A (Fondo oscuro)
+--bg-light: #F8FAFC (Fondo claro)
+
+Textos:
+--text-light: #E2E8F0 (Texto sobre oscuro)
+--text-dark: #1E293B (Texto sobre claro)
+
+================================
+Tipografías:
+- Orbitron (Google Fonts) - Logos, títulos
+- Work Sans (Google Fonts) - Cuerpo de texto
+`;
+
+            const blob = new Blob([colors], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'eclypse-brand-colors.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
