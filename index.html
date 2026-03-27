@@ -86,7 +86,7 @@
   }
 
   /* Video zone — provides 350vh scroll space */
-  #video-zone { height:350vh; }
+  #video-zone { height:420vh; }
 
   /* ── Nav ─────────────────────────────── */
   #main-nav {
@@ -476,8 +476,12 @@
   #packs.packs--light .eyebrow { color:var(--blue); }
   #packs.packs--light .packs-sub { color:var(--td); }
   #packs.packs--light .pack { background:rgba(0,0,0,.02); border-color:rgba(212,175,55,.3); }
-  #packs.packs--light .pack-qty, #packs.packs--light .pack-desc, #packs.packs--light .pack-upr { color:var(--navy); }
-  #packs.packs--light .pack-price { color:var(--blue); }
+  #packs.packs--light .pack-qty, #packs.packs--light .pack-desc { color:var(--navy); }
+  #packs.packs--light .pack-price     { color:var(--blue); }
+  #packs.packs--light .pack-per-ud    { color:var(--navy); opacity:.5; }
+  #packs.packs--light .pack-total     { color:var(--navy); opacity:.55; }
+  #packs.packs--light .pack-ship-note { color:var(--blue); opacity:.6; }
+  #packs.packs--light .pack-savings   { color:var(--blue); }
   #packs.packs--light .packs-guarantees { color:var(--td); }
   #packs .section-title { text-align:center; }
   #packs .eyebrow { text-align:center; display:block; }
@@ -508,8 +512,10 @@
   .packs-row.model-purple .pack-savings { color:#a5b4fc; }
   .pack-qty   { font-family:'Orbitron',sans-serif; font-size:2.6rem; font-weight:900; color:var(--tl); line-height:1; margin-bottom:2px; }
   .pack-desc  { font-size:.7rem; text-transform:uppercase; letter-spacing:1.8px; color:var(--tl); opacity:.4; margin-bottom:18px; }
-  .pack-price { font-family:'Orbitron',sans-serif; font-size:1.85rem; font-weight:700; color:var(--gold); line-height:1; }
-  .pack-upr   { font-size:.73rem; color:var(--tl); opacity:.4; margin:5px 0 6px; }
+  .pack-price { font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:700; color:var(--gold); line-height:1; display:flex; align-items:baseline; justify-content:center; text-align:center; gap:0; }
+  .pack-per-ud { font-size:.7rem; font-family:'Work Sans',sans-serif; font-weight:300; color:var(--tl); opacity:.5; }
+  .pack-total { font-size:.78rem; color:var(--tl); opacity:.4; margin:4px 0 2px; text-align:center; }
+  .pack-ship-note { font-size:.6rem; letter-spacing:1px; text-transform:uppercase; color:var(--gold); opacity:.5; margin-bottom:8px; text-align:center; }
   .pack-savings { font-family:'Orbitron',sans-serif; font-size:.58rem; font-weight:600; letter-spacing:1px; margin-bottom:22px; min-height:14px; }
   .pack-btn { display:block; width:100%; padding:12px; border:none; border-radius:100px; font-family:'Orbitron',sans-serif; font-size:.62rem; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; cursor:pointer; transition:all .3s ease; }
   .pack-btn:hover { transform:translateY(-1px); }
@@ -664,22 +670,22 @@
 <!-- ═══════════════════════════════════════════════════
      TEXT BLOCKS (fixed, video zone only)
 ════════════════════════════════════════════════════ -->
-<div class="text-block left"   data-start="0.10" data-end="0.28" aria-hidden="true">
+<div class="text-block left"   data-start="0.05" data-end="0.28" aria-hidden="true">
   <h2>El eclipse<br>total</h2>
   <p>12 de agosto, 2026</p>
 </div>
 
-<div class="text-block right"  data-start="0.30" data-end="0.50" aria-hidden="true">
+<div class="text-block right"  data-start="0.25" data-end="0.50" aria-hidden="true">
   <h2>Vívelo con<br>seguridad</h2>
   <p>Certificado EN ISO 12312-2</p>
 </div>
 
-<div class="text-block left"   data-start="0.55" data-end="0.75" aria-hidden="true">
+<div class="text-block left"   data-start="0.47" data-end="0.72" aria-hidden="true">
   <h2>eclypse</h2>
   <p>Gafas de eclipse profesionales</p>
 </div>
 
-<div class="text-block center" data-start="0.80" data-end="0.95">
+<div class="text-block center" data-start="0.70" data-end="0.95">
   <h2>Tu momento<br>único</h2>
   <p>España · Agosto 2026</p>
   <button class="cta-btn" onclick="document.getElementById('packs').scrollIntoView({behavior:'smooth'})">Reserva las tuyas</button>
@@ -1013,6 +1019,11 @@
     <button class="mtbtn mtbtn-purple"  id="btn-purple" onclick="setModel('purple')" aria-pressed="false">◑ Eclipse Dark</button>
   </div>
 
+  <div class="model-toggle shipping-toggle" role="group" aria-label="Tipo de entrega">
+    <button class="mtbtn mtbtn-gold on" id="btn-envio"  onclick="setShipping('envio')">📦 Con envío</button>
+    <button class="mtbtn mtbtn-gold"   id="btn-sinenv" onclick="setShipping('sin')">🏪 Sin envío</button>
+  </div>
+
   <div class="packs-row model-gold" id="packs-row" role="list"></div>
 
   <p class="packs-guarantees" aria-label="Garantías de compra">
@@ -1153,10 +1164,10 @@
       if(scrollFraction >= start && scrollFraction <= end){
         const progress = (scrollFraction - start) / (end - start);
         let opacity;
-        if      (progress < 0.25) opacity = progress / 0.25;
-        else if (progress > 0.75) opacity = (1 - progress) / 0.25;
+        if      (progress < 0.20) opacity = progress / 0.20;
+        else if (progress > 0.80) opacity = (1 - progress) / 0.20;
         else                      opacity = 1;
-        const slideY = progress < 0.25 ? (1 - progress/0.25)*28 : 0;
+        const slideY = progress < 0.20 ? (1 - progress/0.20)*28 : 0;
         block.style.opacity   = opacity;
         block.style.transform = isCTA
           ? `translateX(-50%) translateY(${slideY}px)`
@@ -1257,14 +1268,22 @@ tlObs.observe(document.getElementById('timeline'));
 
 
 /* ── PACKS ─────────────────────────────────────────── */
-const PACKS=[
-  {qty:1,  price:3,    desc:'Para ti',         base:3},
-  {qty:5,  price:12.5, desc:'Para la familia', base:3},
-  {qty:10, price:20,   desc:'Para los amigos', base:3},
-  {qty:20, price:35,   desc:'Para el grupo',   base:3},
-  {qty:50, price:75,   desc:'Para el evento',  base:3},
+const PACKS_ENVIO = [
+  { qty:1,  price:2.99,  desc:'Para ti'        },
+  { qty:5,  price:12.49, desc:'Para la familia' },
+  { qty:10, price:19.99, desc:'Para los amigos' },
+  { qty:20, price:34.99, desc:'Para el grupo'   },
+  { qty:50, price:74.99, desc:'Para el evento'  },
+];
+const PACKS_SIN = [
+  { qty:1,  price:2.25,  desc:'Para ti'        },
+  { qty:5,  price:10.99, desc:'Para la familia' },
+  { qty:10, price:17.99, desc:'Para los amigos' },
+  { qty:20, price:29.99, desc:'Para el grupo'   },
+  { qty:50, price:69.99, desc:'Para el evento'  },
 ];
 let activeModel='solar-light';
+let activeShipping='envio'; // 'envio' | 'sin'
 
 function fmt(n){ return n.toFixed(2).replace('.',',')+'\u20AC'; }
 
@@ -1272,23 +1291,34 @@ function renderPacks(){
   const row=document.getElementById('packs-row');
   row.innerHTML='';
   const frag=document.createDocumentFragment();
-  PACKS.forEach((p,i)=>{
-    const upr=p.price/p.qty;
-    const saving=p.qty>1?Math.round((1-upr/p.base)*100):0;
+  const activePacks = activeShipping === 'envio' ? PACKS_ENVIO : PACKS_SIN;
+  activePacks.forEach((p,i)=>{
+    const upr = p.price / p.qty;
+    const base1upr = activePacks[0].price;
+    const saving = p.qty > 1 ? Math.round((1 - upr / base1upr) * 100) : 0;
+    const shippingNote = activeShipping === 'envio' ? 'envío incluido' : 'recogida / envío no incluido';
     const card=document.createElement('article');
     card.className='pack'; card.setAttribute('role','listitem');
     card.style.transitionDelay=(i*70)+'ms';
     card.innerHTML=
       `<div class="pack-qty orb">${p.qty}</div>`+
       `<div class="pack-desc">${p.desc}</div>`+
-      `<div class="pack-price orb">${fmt(p.price)}</div>`+
-      `<div class="pack-upr">${fmt(upr)}&nbsp;/&nbsp;ud.</div>`+
-      `<div class="pack-savings">${saving>0?'Ahorras '+saving+'%':''}</div>`+
+      `<div class="pack-price orb">${fmt(upr)}<span class="pack-per-ud">&nbsp;/&nbsp;ud.</span></div>`+
+      `<div class="pack-total">Total: ${fmt(p.price)}</div>`+
+      `<div class="pack-ship-note">${shippingNote}</div>`+
+      `<div class="pack-savings">${saving > 0 ? 'Ahorras ' + saving + '%' : ''}</div>`+
       `<button class="pack-btn" onclick="reservar(${p.qty},'${activeModel}')">Reservar ahora</button>`;
     frag.appendChild(card);
   });
   row.appendChild(frag);
   setTimeout(()=>row.querySelectorAll('.pack').forEach(c=>c.classList.add('show')),60);
+}
+
+function setShipping(s){
+  activeShipping = s;
+  document.getElementById('btn-envio').classList.toggle('on', s === 'envio');
+  document.getElementById('btn-sinenv').classList.toggle('on', s === 'sin');
+  renderPacks();
 }
 
 function setModel(m){
